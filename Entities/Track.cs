@@ -21,12 +21,14 @@ namespace passion_project.Entities
         public string Playtime { get; set; }
         [JsonPropertyName("file_name")]
         public string FileName { get; set; }
+        [JsonPropertyName("listen_url")]
+        public string ListenUrl { get; set; }
     }
 
     public class Track
     {
         [JsonPropertyName("sections")]
-        public Section Section { get; set; }
+        public List<Section> Section { get; set; }
     }
 
 }

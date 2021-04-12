@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace passion_project.Network
 {
-    public class Librivox_API_Wrapper
+    public class LibrivoxAPI
     {
         private static readonly HttpClient client = new HttpClient();
         private static readonly string baseurl = "https://librivox.org/api/feed/audiobooks?format=json";
@@ -49,7 +49,7 @@ namespace passion_project.Network
         {
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var trackurl = "https://librivox.org/api/feed/audiotracks/?format=json&id={0}";
+            var trackurl = "https://librivox.org/api/feed/audiotracks/?format=json&project_id={0}";
             var url = String.Format(trackurl, id);
             try
             {
