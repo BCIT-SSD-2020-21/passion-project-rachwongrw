@@ -1,11 +1,12 @@
-import { makeStyles } from '@material-ui/core';
-import React from 'react';
+import { makeStyles, Typography } from '@material-ui/core';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Book from '../../components/Book';
 import { booksArray } from '../../data/fakeData';
 
 export default function HomePage() {
-  // const [books, setBooks] = useState([booksArray]);
+  const [books, setBooks] = useState([]);
   const history = useHistory();
   const classes = useStyles();
 
@@ -14,11 +15,20 @@ export default function HomePage() {
     history.push(`/${data.id}`);
   };
 
+  useEffect(() => {
+    (async () => {
+      const response = await axios.get('https://localhost:5001/api/books');
+      setBooks(response.data);
+    })();
+  }, []);
+
   return (
     <div className={classes.root}>
-      {booksArray.map((book) => (
-        <Book book={book} cardClicked={cardClicked} />
-      ))}
+      {!books ? (
+        <Typography>Loading...</Typography>
+      ) : (
+        books.map((book) => <Book book={book} cardClicked={cardClicked} />)
+      )}
     </div>
   );
 }

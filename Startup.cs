@@ -22,7 +22,7 @@ namespace passion_project
         {
 
             services.AddControllersWithViews().AddNewtonsoftJson();
-
+            services.AddCors();
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -49,6 +49,8 @@ namespace passion_project
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
 
             app.UseEndpoints(endpoints =>
             {
