@@ -20,8 +20,7 @@ namespace passion_project.Areas.Identity
         {
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<AuthDbContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("AuthConnection")));
+                    options.UseSqlServer(context.Configuration.GetConnectionString("AuthConnection")));
 
                 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
