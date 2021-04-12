@@ -23,5 +23,6 @@ namespace passion_project.Network
             var books = await JsonSerializer.DeserializeAsync<BookList>(await streamTask);
             return books;
         }
+
     }
 }
