@@ -1,22 +1,31 @@
-import React, { Component } from 'react';
-import { Route } from 'react-router';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
+import React from 'react';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import HomePage from '../src/layouts/HomePage';
+import DetailPage from '../src/layouts/DetailPage';
+import { makeStyles } from '@material-ui/core/styles';
 
-import './custom.css'
-
-export default class App extends Component {
-  static displayName = App.name;
-
-  render () {
-    return (
-      <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} />
-      </Layout>
-    );
+const useStyles = makeStyles((theme) =>  ({
+  root: {
+    marginTop: 100,
+    marginBottom: 100,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
+}))
+
+export default function App() {
+  const classes = useStyles();
+  return (
+    <div>
+      <Router>
+        <main className={classes.root}>
+          <Switch>
+            <HomePage exact path="/" />
+            <DetailPage path="/:id" />
+          </Switch>
+        </main>
+      </Router>
+    </div>
+  );
 }

@@ -1,0 +1,35 @@
+import { makeStyles } from '@material-ui/core';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import Audiobook from '../../components/Audiobook';
+import { booksArray } from '../../data/fakeData'
+
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  }
+})
+
+export default function HomePage() {
+  const [books, setBooks] = useState([booksArray]);
+  const history = useHistory();
+  const classes = useStyles();
+
+  const cardClicked = async (data) => {
+    console.log('Data', data.id)
+    history.push(`/${data.id}`);
+  };
+
+  return (
+    <div className={classes.root}>
+      {booksArray.map((book) =>
+        <Audiobook book={book} cardClicked={cardClicked} />
+      )}
+    </div>
+  );
+}
