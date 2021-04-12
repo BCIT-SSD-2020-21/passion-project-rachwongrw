@@ -26,7 +26,7 @@ namespace passion_project.Entities
     public class Track
     {
         [JsonPropertyName("sections")]
-        public List<Section> Sections;
+        public Section Section { get; set; }
     }
 
 }
