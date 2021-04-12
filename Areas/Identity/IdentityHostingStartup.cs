@@ -17,7 +17,7 @@ namespace passion_project.Areas.Identity
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<AuthDbContext>(options =>
                     options.UseSqlServer(
-                        context.Configuration.GetConnectionString("AuthDbContextConnection")));
+                        context.Configuration.GetConnectionString("AuthConnection")));
 
                 services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<AuthDbContext>();
