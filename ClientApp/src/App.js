@@ -5,16 +5,6 @@ import DetailPage from '../src/layouts/DetailPage';
 import { makeStyles } from '@material-ui/core/styles';
 import HeaderNavigation from './layouts/HeaderNavigation';
 
-const useStyles = makeStyles((theme) =>  ({
-  root: {
-    marginTop: 100,
-    marginBottom: 100,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-}))
-
 export default function App() {
   const classes = useStyles();
   return (
@@ -31,3 +21,13 @@ export default function App() {
     </div>
   );
 }
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginTop: 100,
+    marginBottom: 100,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}));

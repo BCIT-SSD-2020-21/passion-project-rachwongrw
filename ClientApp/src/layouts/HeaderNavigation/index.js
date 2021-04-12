@@ -6,9 +6,7 @@ export default function HeaderNavigation() {
   const history = useHistory();
   return (
     <div>
-      <NavBar
-        onTitleClicked={() => history.push('/')}
-      />
+      <NavBar onTitleClicked={() => history.push('/')} />
     </div>
-  )
+  );
 }

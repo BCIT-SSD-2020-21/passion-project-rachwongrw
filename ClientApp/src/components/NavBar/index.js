@@ -10,6 +10,39 @@ import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
 
+export default function NavBar({ onTitleClicked }) {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <AppBar className={classes.nav} position="static">
+        <Toolbar>
+          <Link
+            color="inherit"
+            className={classes.title}
+            onClick={onTitleClicked}
+          >
+            <Typography variant="h5">AudioVibez</Typography>
+          </Link>
+          <form className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search..."
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </form>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+}
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -71,36 +104,3 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-export default function NavBar({ onTitleClicked }) {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <AppBar className={classes.nav} position="static">
-        <Toolbar>
-          <Link
-            color="inherit"
-            className={classes.title}
-            onClick={onTitleClicked}
-          >
-            <Typography variant="h5">AudioVibez</Typography>
-          </Link>
-          <form className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search..."
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </form>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-}
