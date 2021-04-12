@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     zIndex: 1000,
   },
+  nav: {
+    background: '#ffa500',
+  },
   title: {
     display: 'none',
     color: 'white',
@@ -74,7 +77,7 @@ export default function NavBar({ onTitleClicked }) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar className={classes.nav} position="static">
         <Toolbar>
           <Link
             color="inherit"

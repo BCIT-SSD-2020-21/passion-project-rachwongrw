@@ -11,6 +11,7 @@ const useStyles = makeStyles({
   },
   card: {
     width: 250,
+    height: 200,
     padding: 20,
     display: 'flex',
     flexDirection: 'column',
@@ -19,6 +20,12 @@ const useStyles = makeStyles({
   },
   cardHeader: {
     textAlign: 'center'
+  },
+  button: {
+    color: '#ffa500',
+    '&:hover': {
+      background: 'rgba(255,165,0,0.1)'
+    }
   }
 });
 
@@ -33,7 +40,7 @@ export default function Audiobook({ cardClicked, book }) {
             titleTypographyProps={{ variant: 'h6' }}
             title={title}
           />
-          <Button onClick={() => cardClicked({ id })} color="primary">View</Button>
+          <Button className={classes.button} onClick={() => cardClicked({ id })}>View</Button>
       </Card>
     </Box>
   )
