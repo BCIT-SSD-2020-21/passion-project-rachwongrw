@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Audiobook from '../../components/Audiobook';
+import Book from '../../components/Book';
 import { booksArray } from '../../data/fakeData'
 
 const useStyles = makeStyles({
@@ -27,7 +27,7 @@ export default function HomePage() {
   return (
     <div className={classes.root}>
       {booksArray.map((book) =>
-        <Audiobook book={book} cardClicked={cardClicked} />
+        <Book book={book} cardClicked={cardClicked} />
       )}
     </div>
   );

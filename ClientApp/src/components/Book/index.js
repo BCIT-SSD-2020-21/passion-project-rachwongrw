@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Button, Card, CardHeader } from '@material-ui/core';
+import { Box, Button, Card, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -16,7 +16,12 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    "&:hover": {
+      transition: 'all 1s',
+      transform: 'scaleY(1.05) scaleX(1.05)',
+      borderColor: 'rgba(255,165,0,0.5)'
+    }
   },
   cardHeader: {
     textAlign: 'center'
@@ -34,12 +39,8 @@ export default function Audiobook({ cardClicked, book }) {
   const classes = useStyles();
   return (
     <Box className={classes.root}>
-      <Card className={classes.card}>
-          <CardHeader 
-            className={classes.cardHeader} 
-            titleTypographyProps={{ variant: 'h6' }}
-            title={title}
-          />
+      <Card variant="outlined" className={classes.card}>
+          <Typography variant="h6">{title}</Typography>
           <Button className={classes.button} onClick={() => cardClicked({ id })}>View</Button>
       </Card>
     </Box>
