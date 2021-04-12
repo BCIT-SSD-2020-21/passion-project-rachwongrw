@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 100,
     marginBottom: 100,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    // display: 'flex',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
 }));

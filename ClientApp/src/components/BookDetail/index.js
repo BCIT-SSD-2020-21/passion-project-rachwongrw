@@ -56,8 +56,10 @@ export default function BookDetail() {
 
 const useStyles = makeStyles({
   card: {
-    width: 700,
+    width: "80vw",
+    maxWidth: 700,
     padding: 20,
+    margin: "0 auto",
   },
   subheadings: {
     fontWeight: 'bold',

@@ -55,18 +55,15 @@ const useStyles = makeStyles((theme) => ({
     background: '#ffa500',
   },
   title: {
-    display: 'none',
     color: 'white',
     textDecoration: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
     '&:hover' : {
       color: 'white',
       textDecoration: 'none'
     }
   },
   search: {
+    display: 'none',
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -76,9 +73,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: '100%',
+    // [theme.breakpoints.up('sm')]: {
+    //   marginLeft: theme.spacing(3),
+    //   width: 'auto',
+    // },
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
+      display: 'block',
     },
   },
   searchIcon: {
