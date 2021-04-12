@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Audiobook from '../../components/Audiobook';
 import { booksArray } from '../../data/fakeData'
@@ -16,7 +15,7 @@ const useStyles = makeStyles({
 })
 
 export default function HomePage() {
-  const [books, setBooks] = useState([booksArray]);
+  // const [books, setBooks] = useState([booksArray]);
   const history = useHistory();
   const classes = useStyles();
 

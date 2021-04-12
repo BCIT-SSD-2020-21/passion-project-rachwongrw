@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import HomePage from '../src/layouts/HomePage';
 import DetailPage from '../src/layouts/DetailPage';
 import { makeStyles } from '@material-ui/core/styles';
+import HeaderNavigation from './layouts/HeaderNavigation';
 
 const useStyles = makeStyles((theme) =>  ({
   root: {
@@ -19,6 +20,7 @@ export default function App() {
   return (
     <div>
       <Router>
+        <HeaderNavigation />
         <main className={classes.root}>
           <Switch>
             <HomePage exact path="/" />
