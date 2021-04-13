@@ -37,6 +37,10 @@ export default function NavBar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </form>
+          <Link
+            to="/login"
+            color="inherit"
+          >Login</Link>
         </Toolbar>
       </AppBar>
     </div>

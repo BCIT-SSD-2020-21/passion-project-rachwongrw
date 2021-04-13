@@ -4,6 +4,7 @@ import HomePage from '../src/layouts/HomePage';
 import DetailPage from '../src/layouts/DetailPage';
 import { makeStyles } from '@material-ui/core/styles';
 import HeaderNavigation from './layouts/HeaderNavigation';
+import LoginPage from './layouts/LoginPage';
 
 export default function App() {
   const classes = useStyles();
@@ -14,7 +15,10 @@ export default function App() {
         <main className={classes.root}>
           <Switch>
             <HomePage exact path="/" />
-            <Route path="/:bookId">
+            <Route exact path="/login">
+              <LoginPage />
+            </Route>
+            <Route exact path="/:bookId">
               <DetailPage />
             </Route>
           </Switch>
