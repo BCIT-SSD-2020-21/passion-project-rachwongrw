@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.ServiceModel.Syndication;
+using System.Xml;
 
 namespace passion_project.Network
 {
@@ -63,6 +65,22 @@ namespace passion_project.Network
                 return await Task.FromResult<Track>(null);
             }
 
+        }
+
+        public static async Task<List<Uri>> GetTrackLinks(string id)
+        {
+            Book book = await GetBook(id);
+            var rssUrl = book.Url_Rss;
+            XmlReader reader = XmlReader.Create(rssUrl);
+            SyndicationFeed feed = SyndicationFeed.Load(reader);
+            reader.Close();
+            List<Uri> links = new();
+            foreach (SyndicationItem item in feed.Items)
+            {
+                links.Add(item.Links[1].Uri);
+            }
+        
+            return links;
         }
 
     }
