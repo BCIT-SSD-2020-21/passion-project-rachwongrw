@@ -14,7 +14,7 @@ namespace passion_project.Network
     public class LibrivoxAPI
     {
         private static readonly HttpClient client = new HttpClient();
-        private static readonly string baseurl = "https://librivox.org/api/feed/audiobooks?format=json";
+        private static readonly string baseurl = "https://librivox.org/api/feed/audiobooks/limit/20/offset/0?format=json";
 
         public static async Task<BookList> GetBookList()
         {
@@ -85,7 +85,7 @@ namespace passion_project.Network
                 var match = tracklist.Section.ElementAt(i);
                 if (match != null)
                 {
-                    match.ListenUrl = feed.Items.ElementAt(i).Links[1].Uri.ToString();
+                    match.ListenUrl = feed.Items.ElementAt(i)?.Links?[1]?.Uri.ToString();
                 }
             }
             return tracklist;
