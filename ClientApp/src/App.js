@@ -1,20 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import HomePage from '../src/layouts/HomePage';
 import DetailPage from '../src/layouts/DetailPage';
 import { makeStyles } from '@material-ui/core/styles';
 import HeaderNavigation from './layouts/HeaderNavigation';
+import LoginPage from './layouts/LoginPage';
+import useLocalStorage from 'react-use-localstorage';
+import jwtDecode from 'jwt-decode';
 
 export default function App() {
   const classes = useStyles();
+  const [token, setToken] = useLocalStorage('token');
+  const [user, setUser] = useState(token ? jwtDecode(token) : null);
+
+  useEffect(() => {
+    (async () => {
+      const user = token ? jwtDecode(token) : null;
+      setUser(user);
+    })();
+  }, [token]);
+
   return (
     <div>
       <Router>
-        <HeaderNavigation />
+        <HeaderNavigation user={user} setToken={setToken} />
         <main className={classes.root}>
           <Switch>
-            <HomePage exact path="/" />
-            <Route path="/:bookId">
+            <Route exact path="/">
+              <HomePage />
+            </Route>
+            <Route exact path="/login">
+              <LoginPage setToken={setToken} />
+            </Route>
+            <Route exact path="/:bookId">
               <DetailPage />
             </Route>
           </Switch>
