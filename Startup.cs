@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using passion_project.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace passion_project
 {
@@ -20,7 +22,8 @@ namespace passion_project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<AuthDbContext>(opt =>
+                                   opt.UseSqlServer(Configuration.GetConnectionString("AuthConnection")));
             services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddCors();
             // In production, the React files will be served from this directory
