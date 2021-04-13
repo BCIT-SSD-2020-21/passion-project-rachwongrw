@@ -1,42 +1,59 @@
-import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, CardMedia, IconButton, Typography } from '@material-ui/core';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
+import PauseIcon from '@material-ui/icons/Pause';
 
-export default function AudioPlayer() {
+export default function AudioPlayer({book}) {
+  const [audioPaused, setAudioPause] = useState(false)
   const classes = useStyles();
-  const theme = useTheme();
+  
+  
+  const playAudio = () => {
+    const audioEl = document.getElementById("audio")
+    audioEl.paused ? audioEl.play() : audioEl.pause()
+    setAudioPause(!audioPaused)
+  }
 
   return (
     <Card className={classes.root}>
-      <div className={classes.details}>
-        <CardContent className={classes.content}>
-          <Typography component="h5" variant="h5">
-            Count of Monte Cristo
-          </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
-          Alexandre Dumas
-          </Typography>
-        </CardContent>
-        <div className={classes.controls}>
-          <IconButton aria-label="previous">
-            {theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
-          </IconButton>
-          <IconButton aria-label="play/pause">
-            <PlayArrowIcon className={classes.playIcon} />
-          </IconButton>
-          <IconButton aria-label="next">
-            {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
-          </IconButton>
-        </div>
-      </div>
-      <CardMedia
-        className={classes.cover}
-        image="https://m.media-amazon.com/images/I/611Eot7+zJL._SL500_.jpg"
-        title="Live from space album cover"
-      />
+      { book && 
+        <>
+          <div className={classes.details}>
+            <CardContent className={classes.content}>
+              <Typography component="h5" variant="h5">
+                {book.title}
+              </Typography>
+              <Typography variant="subtitle1" color="textSecondary">
+                {book.authors[0].firstName} {book.authors[0].lastName}
+              </Typography>
+            </CardContent>
+            <div className={classes.controls}>
+              <IconButton aria-label="previous" >
+                <SkipPreviousIcon />
+              </IconButton>
+              <IconButton aria-label="play/pause" onClick={() => playAudio()}>
+                {
+                  audioPaused ? <PauseIcon className={classes.playIcon} /> : <PlayArrowIcon className={classes.playIcon} />
+                }
+                <audio id="audio" src="https://ia802506.us.archive.org/2/items/letters_brides_0709_librivox/letters_of_two_brides_01_debalzac.mp3">
+                </audio>
+              </IconButton>
+              <IconButton aria-label="next">
+                 <SkipNextIcon />
+              </IconButton>
+            </div>
+            
+          </div>
+          <CardMedia
+            className={classes.cover}
+            image="https://m.media-amazon.com/images/I/611Eot7+zJL._SL500_.jpg"
+            title={book.title}
+          />
+        </>
+      }
     </Card>
   );
 }

@@ -17,8 +17,8 @@ export default function DetailPage() {
 
   return (
     <div>
-      <AudioPlayer/>
-      <BookDetail />
+      <AudioPlayer book={book}/>
+      <BookDetail book={book} />
     </div>
   );
 }

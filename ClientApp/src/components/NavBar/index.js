@@ -23,7 +23,7 @@ export default function NavBar() {
             className={classes.title}
           >
             <Typography variant="h5">AudioVibez</Typography>
-          </Link>
+          </Link>&nbsp;
           <form className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
