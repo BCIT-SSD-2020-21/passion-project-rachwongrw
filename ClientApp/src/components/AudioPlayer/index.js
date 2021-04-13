@@ -9,7 +9,7 @@ import { getAudioFiles } from '../../network';
 import { useParams } from 'react-router-dom';
 
 export default function AudioPlayer({book}) {
-  const [audioPaused, setAudioPause] = useState(false)
+  const [audioPaused, setAudioPause] = useState(true)
   const [tracks, setTracks] = useState([])
   const [i, setIndex] = useState(0)
   const classes = useStyles();
@@ -32,6 +32,7 @@ export default function AudioPlayer({book}) {
   const changeTrack = (dir) => {
     var newIndex = dir === "next" ? i + 1 : i - 1
     setIndex(newIndex)
+    setAudioPause(true)
   }
 
   return (
@@ -58,7 +59,7 @@ export default function AudioPlayer({book}) {
               </IconButton>
               <IconButton aria-label="play/pause" onClick={() => playAudio("audio")}>
                 {
-                  audioPaused ? <PauseIcon className={classes.playIcon} /> : <PlayArrowIcon className={classes.playIcon} />
+                  audioPaused ?  <PlayArrowIcon className={classes.playIcon} /> : <PauseIcon className={classes.playIcon} />
                 }
                 <audio id="audio" src={tracks[i].listenUrl}>
                 </audio>
