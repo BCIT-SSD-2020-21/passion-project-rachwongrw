@@ -8,7 +8,7 @@ export default function Audiobook({ cardClicked, book }) {
   return (
     <Box className={classes.root}>
       <Card variant="outlined" className={classes.card}>
-        <Typography variant="h6">{title}</Typography>
+        <Typography className={classes.bookTitle} variant="h6">{title}</Typography>
         <Button className={classes.button} onClick={() => cardClicked({ id })}>
           View
         </Button>
@@ -24,13 +24,16 @@ const useStyles = makeStyles({
     alignItems: 'center',
     margin: 20,
   },
+  bookTitle: {
+    textAlign: 'center'
+  },
   card: {
     width: 250,
     height: 200,
     padding: 20,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     '&:hover': {
       transition: 'all 1s',
