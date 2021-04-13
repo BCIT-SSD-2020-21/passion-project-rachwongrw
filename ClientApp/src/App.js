@@ -7,6 +7,7 @@ import HeaderNavigation from './layouts/HeaderNavigation';
 import LoginPage from './layouts/LoginPage';
 import useLocalStorage from 'react-use-localstorage';
 import jwtDecode from 'jwt-decode';
+import "./custom.css"
 
 export default function App() {
   const classes = useStyles();

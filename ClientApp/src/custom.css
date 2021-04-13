@@ -13,6 +13,6 @@ code {
   border-color: #1861ac;
 }
 
-body {
-  background-color: #E01A76;
+button.MuiButtonBase-root:focus, .MuiIconButton-root:focus, .MuiButton-label:focus {
+  outline: none;
 }
