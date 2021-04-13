@@ -1,17 +1,11 @@
-import {
-  Box,
-  Card,
-  CardHeader,
-  makeStyles,
-  Typography,
-} from '@material-ui/core';
+import {Box, Card, CardHeader, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 
 export default function BookDetail({ book }) {
   const classes = useStyles();
 
   return (
-    <div>
+    <div style={{marginBottom: '1em'}}>
       {book && (
         <Card className={classes.card}>
           <Box className={classes.header}>
@@ -38,8 +32,8 @@ export default function BookDetail({ book }) {
 
 const useStyles = makeStyles({
   card: {
-    width: 700,
     padding: 20,
+    margin: "0 auto",
   },
   subheadings: {
     fontWeight: 'bold',
