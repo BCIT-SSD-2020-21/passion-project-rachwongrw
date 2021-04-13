@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import HomePage from '../src/layouts/HomePage';
 import DetailPage from '../src/layouts/DetailPage';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,7 +14,9 @@ export default function App() {
         <main className={classes.root}>
           <Switch>
             <HomePage exact path="/" />
-            <DetailPage path="/:id" />
+            <Route path="/:bookId">
+              <DetailPage />
+            </Route>
           </Switch>
         </main>
       </Router>

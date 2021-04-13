@@ -1,24 +1,32 @@
 import { makeStyles } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Book from '../../components/Book';
-import { booksArray } from '../../data/fakeData';
+import { getAllBooks } from '../../network';
 
 export default function HomePage() {
-  // const [books, setBooks] = useState([booksArray]);
+  const [books, setBooks] = useState([]);
   const history = useHistory();
   const classes = useStyles();
 
   const cardClicked = async (data) => {
-    console.log('Data', data.id);
     history.push(`/${data.id}`);
   };
 
+  useEffect(() => {
+    (async () => {
+      const response = await getAllBooks();
+      setBooks(response.data);
+    })();
+  }, []);
+
   return (
     <div className={classes.root}>
-      {booksArray.map((book) => (
-        <Book book={book} cardClicked={cardClicked} />
-      ))}
+      {!books ? (
+        <h1>Loading...</h1>
+      ) : (
+        books.map((book) => <Book key={book.id} book={book} cardClicked={cardClicked} />)
+      )}
     </div>
   );
 }
