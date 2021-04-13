@@ -67,20 +67,28 @@ namespace passion_project.Network
 
         }
 
-        public static async Task<List<Uri>> GetTrackLinks(string id)
+        public static async Task<Track> GetTrackLinks(string id)
         {
+            // TODO: Error handling
             Book book = await GetBook(id);
-            var rssUrl = book.Url_Rss;
+            Track tracklist = await GetTrack(id);
+            var rssUrl = book?.Url_Rss;
+            if (rssUrl == null)
+            {
+                return null;
+            }
             XmlReader reader = XmlReader.Create(rssUrl);
             SyndicationFeed feed = SyndicationFeed.Load(reader);
             reader.Close();
-            List<Uri> links = new();
-            foreach (SyndicationItem item in feed.Items)
+            for (var i = 0; i < feed.Items.Count(); i++)
             {
-                links.Add(item.Links[1].Uri);
+                var match = tracklist.Section.ElementAt(i);
+                if (match != null)
+                {
+                    match.ListenUrl = feed.Items.ElementAt(i).Links[1].Uri.ToString();
+                }
             }
-        
-            return links;
+            return tracklist;
         }
 
     }
