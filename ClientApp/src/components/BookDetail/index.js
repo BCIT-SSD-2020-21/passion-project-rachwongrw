@@ -8,7 +8,6 @@ import {
 import React from 'react';
 
 export default function BookDetail({ book }) {
-  console.log(book);
   const classes = useStyles();
 
   return (
