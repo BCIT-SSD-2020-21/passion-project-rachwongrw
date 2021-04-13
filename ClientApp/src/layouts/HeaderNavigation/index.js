@@ -12,10 +12,7 @@ export default function HeaderNavigation({ user, setToken }) {
 
   return (
     <div>
-      <NavBar
-        onSignOutClicked={signOut}
-        user={user} 
-      />
+      <NavBar onSignOutClicked={signOut} user={user} />
     </div>
   );
 }

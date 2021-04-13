@@ -31,7 +31,7 @@ export default function NavBar({ user, onSignOutClicked }) {
   const signOut = () => {
     handleMenuClose();
     onSignOutClicked();
-  }
+  };
 
   return (
     <div className={classes.root}>

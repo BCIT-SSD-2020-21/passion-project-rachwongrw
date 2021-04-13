@@ -25,18 +25,17 @@ export default function Login({ closeClicked, submitted }) {
   };
 
   const handleSubmit = (e) => {
-    console.log('in handleSubmit')
     e.preventDefault();
 
     if (tabValue === 0) {
       submitted({ type: 'login', email, password });
     } else {
-      submitted({ type: 'signup', email, password, confirmPassword })
+      submitted({ type: 'signup', email, password, confirmPassword });
     }
 
     setEmail('');
     setPassword('');
-    setConfirmPassword('')
+    setConfirmPassword('');
   };
 
   return (
@@ -46,9 +45,10 @@ export default function Login({ closeClicked, submitted }) {
           className={classes.header}
           title={tabValue === 0 ? 'Login' : 'Sign Up'}
         ></CardHeader>
-        <IconButton 
+        <IconButton
           onClick={() => closeClicked()}
-          className={classes.closeButton}>
+          className={classes.closeButton}
+        >
           <CloseRounded />
         </IconButton>
       </Box>
@@ -103,7 +103,9 @@ export default function Login({ closeClicked, submitted }) {
               variant="outlined"
             />
           )}
-          <Button type="submit" className={classes.submitBtn}>SUBMIT</Button>
+          <Button type="submit" className={classes.submitBtn}>
+            SUBMIT
+          </Button>
         </form>
       </CardContent>
     </Card>
