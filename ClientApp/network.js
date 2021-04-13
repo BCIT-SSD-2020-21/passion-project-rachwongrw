@@ -1,6 +1,6 @@
 async function getAllBooks() {
   try {
-    return await axios.get('https://localhost:5001/api/books');
+    return await axios.get('/api/books');
   } catch (error) {
     console.log(error)
   }
@@ -8,7 +8,7 @@ async function getAllBooks() {
 
 async function getBookById(id) {
   try {
-    return await axios.get(`https://localhost:5001/api/books/${id}`);
+    return await axios.get(`/api/books/${id}`);
   } catch (error) {
     console.log(error)
   }
