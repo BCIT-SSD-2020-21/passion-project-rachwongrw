@@ -6,24 +6,39 @@ import {
   fade,
   InputBase,
   Box,
+  IconButton,
+  MenuItem,
+  Menu,
 } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
+import { AccountCircle } from '@material-ui/icons';
 
-export default function NavBar() {
+export default function NavBar({ user, onSignOutClicked }) {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleMenuClose = (e) => {
+    setAnchorEl(null);
+  };
+
+  const signOut = () => {
+    handleMenuClose();
+    onSignOutClicked();
+  }
 
   return (
     <div className={classes.root}>
       <AppBar className={classes.nav} position="static">
         <Toolbar className={classes.toolbar}>
           <Box className={classes.container}>
-            <Link
-              to="/"
-              color="inherit"
-              className={classes.title}
-            >
+            <Link to="/" color="inherit" className={classes.title}>
               <Typography variant="h5">AudioVibez</Typography>
             </Link>
             <form className={classes.search}>
@@ -41,11 +56,42 @@ export default function NavBar() {
             </form>
           </Box>
           <Box>
-          <Link
-            className={classes.link}
-            to="/login"
-            color="inherit"
-          >Login</Link>
+            {user ? (
+              <>
+                <IconButton
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={open}
+                  onClose={handleMenuClose}
+                >
+                  <MenuItem>Profile</MenuItem>
+                  <MenuItem onClick={signOut}>Sign Out</MenuItem>
+                </Menu>
+              </>
+            ) : (
+              <Link className={classes.link} to="/login" color="inherit">
+                Login
+              </Link>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
@@ -63,14 +109,14 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   nav: {
     background: '#ffa500',
   },
   toolbar: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   title: {
     display: 'none',
@@ -79,10 +125,10 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
-    '&:hover' : {
+    '&:hover': {
       color: 'white',
-      textDecoration: 'none'
-    }
+      textDecoration: 'none',
+    },
   },
   search: {
     position: 'relative',
@@ -124,9 +170,9 @@ const useStyles = makeStyles((theme) => ({
   link: {
     color: 'white',
     textDecoration: 'none',
-    '&:hover' : {
+    '&:hover': {
       color: 'white',
-      textDecoration: 'none'
-    }
-  }
+      textDecoration: 'none',
+    },
+  },
 }));

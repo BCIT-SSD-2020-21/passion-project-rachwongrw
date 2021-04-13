@@ -1,28 +1,32 @@
-import React from 'react'
-import { useHistory } from 'react-router'
-import Login from '../../components/Login'
+import React from 'react';
+import { useHistory } from 'react-router';
+import Login from '../../components/Login';
+import { loginUser, registerUser } from '../../network';
 
-export default function LoginPage() {
+export default function LoginPage({ setToken }) {
   const history = useHistory();
 
   const login = async (details) => {
     let result;
 
-    // calls to login/register from network.js
-
-    if (result) {
-      // set token
+    if (details.type === 'login') {
+      result = await loginUser(details);
     }
 
-    history.push('/')
-  }
+    if (details.type === 'signup') {
+      result = await registerUser(details);
+    }
+
+    if (result) {
+      setToken(result);
+    }
+
+    history.push('/');
+  };
 
   return (
     <div>
-      <Login 
-        closeClicked={() => history.push('/')}
-        submitted={login}
-      />
+      <Login closeClicked={() => history.push('/')} submitted={login} />
     </div>
-  )
+  );
 }

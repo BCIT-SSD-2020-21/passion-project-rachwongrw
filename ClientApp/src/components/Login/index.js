@@ -8,7 +8,7 @@ import {
   Tabs,
   Tab,
   TextField,
-  Button
+  Button,
 } from '@material-ui/core';
 import { CloseRounded } from '@material-ui/icons';
 import React, { useState } from 'react';
@@ -17,25 +17,26 @@ export default function Login({ closeClicked, submitted }) {
   const classes = useStyles();
   const [tabValue, setTabValue] = useState(0);
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleChange = (e, newTabValue) => {
     setTabValue(newTabValue);
   };
 
   const handleSubmit = (e) => {
+    console.log('in handleSubmit')
     e.preventDefault();
 
     if (tabValue === 0) {
-      submitted({ type: 'login', username, password })
+      submitted({ type: 'login', email, password });
     } else {
-      submitted({ type: 'signup', email, username, password })
+      submitted({ type: 'signup', email, password, confirmPassword })
     }
 
-    setUsername('');
     setEmail('');
     setPassword('');
+    setConfirmPassword('')
   };
 
   return (
@@ -45,7 +46,9 @@ export default function Login({ closeClicked, submitted }) {
           className={classes.header}
           title={tabValue === 0 ? 'Login' : 'Sign Up'}
         ></CardHeader>
-        <IconButton className={classes.closeButton}>
+        <IconButton 
+          onClick={() => closeClicked()}
+          className={classes.closeButton}>
           <CloseRounded />
         </IconButton>
       </Box>
@@ -71,23 +74,13 @@ export default function Login({ closeClicked, submitted }) {
           noValidate
           autoComplete="off"
         >
-          {tabValue === 1 && (
-            <TextField
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={classes.formInput}
-              id="outlined-basic"
-              label="Email"
-              variant="outlined"
-            />
-          )}
           <TextField
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className={classes.formInput}
             id="outlined-basic"
-            label="Username"
+            label="Email"
             variant="outlined"
           />
           <TextField
@@ -99,9 +92,18 @@ export default function Login({ closeClicked, submitted }) {
             label="Password"
             variant="outlined"
           />
-          <Button className={classes.submitBtn}>
-            SUBMIT
-          </Button>
+          {tabValue === 1 && (
+            <TextField
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className={classes.formInput}
+              id="outlined-basic"
+              label="Confirm Password"
+              variant="outlined"
+            />
+          )}
+          <Button type="submit" className={classes.submitBtn}>SUBMIT</Button>
         </form>
       </CardContent>
     </Card>
@@ -143,5 +145,5 @@ const useStyles = makeStyles((theme) => ({
   submitBtn: {
     marginTop: 20,
     marginBottom: 35,
-  }
+  },
 }));
