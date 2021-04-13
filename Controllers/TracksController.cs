@@ -16,7 +16,7 @@ namespace passion_project.Controllers
          [HttpGet("{id}", Name = "GetTrack")]
         public async Task<IActionResult> GetById(string id)
         {
-            var track = await LibrivoxAPI.GetTrack(id);
+            var track = await LibrivoxAPI.GetTrackLinks(id);
             if (track == null)
             {
                 return NotFound(id);
