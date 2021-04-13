@@ -5,6 +5,7 @@ import {
   Typography,
   fade,
   InputBase,
+  Box,
 } from '@material-ui/core';
 import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
@@ -16,31 +17,36 @@ export default function NavBar() {
   return (
     <div className={classes.root}>
       <AppBar className={classes.nav} position="static">
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
+          <Box className={classes.container}>
+            <Link
+              to="/"
+              color="inherit"
+              className={classes.title}
+            >
+              <Typography variant="h5">AudioVibez</Typography>
+            </Link>
+            <form className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search..."
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </form>
+          </Box>
+          <Box>
           <Link
-            to="/"
-            color="inherit"
-            className={classes.title}
-          >
-            <Typography variant="h5">AudioVibez</Typography>
-          </Link>
-          <form className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search..."
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </form>
-          <Link
+            className={classes.link}
             to="/login"
             color="inherit"
           >Login</Link>
+          </Box>
         </Toolbar>
       </AppBar>
     </div>
@@ -55,8 +61,16 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     zIndex: 1000,
   },
+  container: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
   nav: {
     background: '#ffa500',
+  },
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   title: {
     display: 'none',
@@ -107,4 +121,12 @@ const useStyles = makeStyles((theme) => ({
       width: '20ch',
     },
   },
+  link: {
+    color: 'white',
+    textDecoration: 'none',
+    '&:hover' : {
+      color: 'white',
+      textDecoration: 'none'
+    }
+  }
 }));
