@@ -10,7 +10,7 @@ import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
 
-export default function NavBar({ onTitleClicked }) {
+export default function NavBar() {
   const classes = useStyles();
 
   return (
@@ -18,9 +18,9 @@ export default function NavBar({ onTitleClicked }) {
       <AppBar className={classes.nav} position="static">
         <Toolbar>
           <Link
+            to="/"
             color="inherit"
             className={classes.title}
-            onClick={onTitleClicked}
           >
             <Typography variant="h5">AudioVibez</Typography>
           </Link>

@@ -1,9 +1,8 @@
 import { makeStyles, Typography } from '@material-ui/core';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Book from '../../components/Book';
-import { booksArray } from '../../data/fakeData';
+import { getAllBooks } from '../../network';
 
 export default function HomePage() {
   const [books, setBooks] = useState([]);
@@ -11,13 +10,12 @@ export default function HomePage() {
   const classes = useStyles();
 
   const cardClicked = async (data) => {
-    console.log('Data', data.id);
     history.push(`/${data.id}`);
   };
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get('https://localhost:5001/api/books');
+      const response = await getAllBooks();
       setBooks(response.data);
     })();
   }, []);
@@ -25,9 +23,9 @@ export default function HomePage() {
   return (
     <div className={classes.root}>
       {!books ? (
-        <Typography>Loading...</Typography>
+        <h1>Loading...</h1>
       ) : (
-        books.map((book) => <Book book={book} cardClicked={cardClicked} />)
+        books.map((book) => <Book key={book.id} book={book} cardClicked={cardClicked} />)
       )}
     </div>
   );
