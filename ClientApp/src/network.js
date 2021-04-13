@@ -15,3 +15,11 @@ export async function getBookById(id) {
     console.log(error)
   }
 }
+
+export async function getAudioFiles(id) {
+  try {
+    return await axios.get(`https://localhost:5001/api/tracks/${id}`)
+  } catch (error) {
+    console.log(error)
+  }
+}
