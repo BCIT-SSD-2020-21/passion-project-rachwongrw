@@ -5,25 +5,11 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 export default function BookDetail({ book }) {
   console.log(book);
   const classes = useStyles();
-  const parser = new DOMParser();
-  const [parsed, setParsed] = useState('');
-  // const { title, description, authors, total_time } = book;
-
-  useEffect(() => {
-    if (book) {
-      const parsedString = parser.parseFromString(
-        book.description,
-        'text/html'
-      );
-      console.log(parsedString);
-      setParsed(parsedString);
-    }
-  }, []);
 
   return (
     <div>
