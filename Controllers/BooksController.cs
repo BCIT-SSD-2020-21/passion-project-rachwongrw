@@ -38,5 +38,25 @@ namespace passion_project.Controllers
             }
             return Ok(book);
         }
+
+        [HttpGet("search/{searchTerm}")]
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            try
+            {
+                var books = await LibrivoxAPI.SearchBooks(searchTerm);
+
+                if (books == null)
+                {
+                    return NotFound(searchTerm);
+                }
+
+                return Ok(books.Books);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
     }
 }
