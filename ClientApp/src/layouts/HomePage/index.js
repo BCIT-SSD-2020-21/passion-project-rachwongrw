@@ -22,12 +22,12 @@ export default function HomePage() {
       const response = await getAllBooks(limit, offset);
       setBooks(response.data);
     })();
-    console.log('rendered')
+    console.log('rendered');
   }, [offset]);
 
   const handleChange = (e, value) => {
-    setOffset(value - 1)
-  }
+    setOffset(value - 1);
+  };
 
   return (
     <div className={classes.root}>
@@ -35,13 +35,18 @@ export default function HomePage() {
         <h1>Loading...</h1>
       ) : (
         <>
-          {books.map((book) => (
-            <Book key={book.id} book={book} cardClicked={cardClicked} />
-          ))}
-          <Pagination
-            onChange={handleChange} 
-            page={offset + 1} 
-            count={totalPages} />
+          <div className={classes.booksContainer}>
+            {books.map((book) => (
+              <Book key={book.id} book={book} cardClicked={cardClicked} />
+            ))}
+          </div>
+          <div className={classes.paginationContainer}>
+            <Pagination
+              onChange={handleChange}
+              page={offset + 1}
+              count={totalPages}
+            />
+          </div>
         </>
       )}
     </div>
@@ -51,9 +56,18 @@ export default function HomePage() {
 const useStyles = makeStyles({
   root: {
     display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  booksContainer: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
+  },
+  paginationContainer: {
+    marginTop: 20
   },
 });
