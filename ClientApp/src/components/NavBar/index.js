@@ -15,9 +15,10 @@ import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
 import { AccountCircle } from '@material-ui/icons';
 
-export default function NavBar({ user, onSignOutClicked }) {
+export default function NavBar({ user, onSignOutClicked, onSearch }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [searchValue, setSearchValue] = useState('')
   const open = Boolean(anchorEl);
 
   const handleMenu = (e) => {
@@ -33,6 +34,12 @@ export default function NavBar({ user, onSignOutClicked }) {
     onSignOutClicked();
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSearch({ searchValue });
+    setSearchValue('');
+  }
+
   return (
     <div className={classes.root}>
       <AppBar className={classes.nav} position="static">
@@ -41,12 +48,14 @@ export default function NavBar({ user, onSignOutClicked }) {
             <Link to="/" color="inherit" className={classes.title}>
               <Typography variant="h5">AudioVibez</Typography>
             </Link>&nbsp;
-            <form className={classes.search}>
+            <form onSubmit={handleSubmit} className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
               <InputBase
                 placeholder="Search..."
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
