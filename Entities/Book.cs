@@ -1,5 +1,7 @@
-﻿using System;
+﻿using passion_project.Areas.Identity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -37,12 +39,19 @@ namespace passion_project.Entities
         [JsonPropertyName("totaltimesecs")]
         public int Total_Time_Secs { get; set; }
         [JsonPropertyName("authors")]
+        // The following lists are not mapped because they need more entities created to map to
+        [NotMapped]
         public List<Author> Authors { get; set; }
         [JsonPropertyName("sections")]
+        [NotMapped]
         public List<string> Sections { get; set; }
         [JsonPropertyName("genres")]
+        [NotMapped]
         public List<string> Genres { get; set; }
         [JsonPropertyName("translators")]
+        [NotMapped]
         public List<string> Translators { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<ApplicationUser> Users { get; set; }
     }
 }
