@@ -53,7 +53,6 @@ namespace passion_project.Controllers
             try
             {
                 var userId = HttpContext.User.Claims.ElementAt(0).Value;
-                var allUsers = _db.Users.Where(t => t == t);
                 var user = _db.Users.SingleOrDefault(u => u.Id == userId);
                 if (user == null)
                 {
