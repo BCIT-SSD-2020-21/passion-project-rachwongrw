@@ -52,6 +52,7 @@ namespace passion_project
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            app.UseAuthorization();
 
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
 
