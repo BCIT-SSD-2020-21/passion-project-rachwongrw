@@ -22,7 +22,6 @@ export default function HomePage() {
       const response = await getAllBooks(limit, offset);
       setBooks(response.data);
     })();
-    console.log('rendered');
   }, [offset]);
 
   const handleChange = (e, value) => {
