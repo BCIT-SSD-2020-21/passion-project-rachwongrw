@@ -42,12 +42,20 @@ export async function loginUser(data) {
   }
 }
 
+// Uses Librivox searcg endpoint to search for books.
 export async function searchBooks(searchTerm) {
   try {
     const response = await axios.get(`${baseUrl}/api/books/search/${searchTerm}`);
-    console.log('Search Response:', response)
     return response.data;
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function getAudioFiles(id) {
+  try {
+    return await axios.get(`https://localhost:5001/api/tracks/${id}`)
+  } catch (error) {
+    console.log(error)
   }
 }

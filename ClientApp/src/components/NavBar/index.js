@@ -47,7 +47,7 @@ export default function NavBar({ user, onSignOutClicked, onSearch }) {
           <Box className={classes.container}>
             <Link to="/" color="inherit" className={classes.title}>
               <Typography variant="h5">AudioVibez</Typography>
-            </Link>
+            </Link>&nbsp;
             <form onSubmit={handleSubmit} className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -128,7 +128,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   title: {
-    display: 'none',
     color: 'white',
     textDecoration: 'none',
     [theme.breakpoints.up('sm')]: {
@@ -140,6 +139,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   search: {
+    display: 'none',
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -149,9 +149,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: '100%',
+    // [theme.breakpoints.up('sm')]: {
+    //   marginLeft: theme.spacing(3),
+    //   width: 'auto',
+    // },
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
+      display: 'block',
     },
   },
   searchIcon: {

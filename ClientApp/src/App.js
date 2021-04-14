@@ -8,6 +8,7 @@ import LoginPage from './layouts/LoginPage';
 import useLocalStorage from 'react-use-localstorage';
 import jwtDecode from 'jwt-decode';
 import SearchPage from './layouts/SearchPage';
+import "./custom.css"
 
 export default function App() {
   const classes = useStyles();
@@ -53,8 +54,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 100,
     marginBottom: 100,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    // display: 'flex',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
 }));

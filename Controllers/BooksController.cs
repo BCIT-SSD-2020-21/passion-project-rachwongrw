@@ -20,11 +20,12 @@ namespace passion_project.Controllers
             {
                 var books = await LibrivoxAPI.GetBookList();
                 return Ok(books.Books);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return BadRequest(e);
             }
-            
+
         }
 
         [HttpGet("{id}", Name = "GetBook")]
