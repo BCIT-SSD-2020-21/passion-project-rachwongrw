@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = ''
+const baseUrl = 'https://localhost:5001'
 
 // Use this URL when running the debugger in order to hit breakpoints.
 // const baseUrl = 'https://localhost:44303'
