@@ -8,6 +8,7 @@ import LoginPage from './layouts/LoginPage';
 import useLocalStorage from 'react-use-localstorage';
 import jwtDecode from 'jwt-decode';
 import "./custom.css"
+import ProfilePage from './layouts/ProfilePage';
 
 export default function App() {
   const classes = useStyles();
@@ -30,11 +31,15 @@ export default function App() {
             <Route exact path="/">
               <HomePage />
             </Route>
-            <Route exact path="/login">
+            <Route path="/login">
               <LoginPage setToken={setToken} />
             </Route>
-            <Route exact path="/:bookId">
+            <Route path="/:bookId">
               <DetailPage />
+            </Route>
+            {/* <Route exact path="/profile" component={<ProfilePage/>} /> */}
+            <Route path="/profile">
+              <ProfilePage />
             </Route>
           </Switch>
         </main>

@@ -9,12 +9,13 @@ export default function DetailPage() {
   const [book, setBook] = useState()
   const { bookId } = useParams();
   const classes = useStyles();
+  
   useEffect(() => {
     (async () => {
       const response = await getBookById(bookId);
       setBook(response.data)
     })();
-  }, [bookId])
+  }, [])
 
   return (
     <div className={classes.root}>

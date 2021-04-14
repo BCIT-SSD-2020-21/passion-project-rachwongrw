@@ -18,10 +18,9 @@ export default function AudioPlayer({book}) {
   useEffect(() => {
     (async () => {
       const response = await getAudioFiles(bookId);
-      console.log("get tracks", response.data.section)
       setTracks(response.data.section)
     })();
-  },[bookId])
+  },[])
 
   const playAudio = (id) => {
     const audioEl = document.getElementById(id)
