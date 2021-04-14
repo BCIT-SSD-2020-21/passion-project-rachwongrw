@@ -10,9 +10,9 @@ using passion_project.Entities;
 
 namespace passion_project.Data
 {
-    public class AuthDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
-        public AuthDbContext(DbContextOptions<AuthDbContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }

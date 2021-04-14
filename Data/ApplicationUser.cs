@@ -10,6 +10,5 @@ namespace passion_project.Areas.Identity
     public class ApplicationUser: IdentityUser
     {
         public virtual ICollection<Book> BooksListened { get; set; }
-
     }
 }
