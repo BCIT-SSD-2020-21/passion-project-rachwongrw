@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = 'https://localhost:5001'
+const baseUrl = ''
 
 // Use this URL when running the debugger in order to hit breakpoints.
 // const baseUrl = 'https://localhost:44303'
@@ -54,7 +54,7 @@ export async function searchBooks(searchTerm) {
 
 export async function getAudioFiles(id) {
   try {
-    return await axios.get(`https://localhost:5001/api/tracks/${id}`)
+    return await axios.get(`${baseUrl}/api/tracks/${id}`)
   } catch (error) {
     console.log(error)
   }
