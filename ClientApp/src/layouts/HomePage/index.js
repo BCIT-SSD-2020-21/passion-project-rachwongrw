@@ -10,7 +10,7 @@ export default function HomePage() {
   const classes = useStyles();
 
   const cardClicked = async (data) => {
-    history.push(`/${data.id}`);
+    history.push(`/books/${data.id}`);
   };
 
   useEffect(() => {

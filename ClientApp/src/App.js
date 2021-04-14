@@ -38,16 +38,18 @@ export default function App() {
             <Route path="/login">
               <LoginPage setToken={setToken} />
             </Route>
-            <Route path="/:bookId">
-              <DetailPage />
-            </Route>
-            {/* <Route exact path="/profile" component={<ProfilePage/>} /> */}
-            <Route path="/profile">
-              <ProfilePage />
-              </Route>
+             {/* <Route exact path="/profile" component={ProfilePage} /> */}
+      
             <Route exact path="/search/:searchTerm">
               <SearchPage />
             </Route>
+            <Route path="/books/:bookId">
+              <DetailPage />
+            </Route>
+            <Route path="/profile">
+              <ProfilePage />
+            </Route>
+            
           </Switch>
         </main>
       </Router>
