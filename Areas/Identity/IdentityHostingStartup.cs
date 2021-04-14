@@ -19,7 +19,7 @@ namespace passion_project.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<AuthDbContext>(options =>
+                services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(context.Configuration.GetConnectionString("AuthConnection")));
 
                 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -39,7 +39,7 @@ namespace passion_project.Areas.Identity
                 });
 
                 services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<AuthDbContext>();
+                    .AddEntityFrameworkStores<ApplicationDbContext>();
             });
         }
     }

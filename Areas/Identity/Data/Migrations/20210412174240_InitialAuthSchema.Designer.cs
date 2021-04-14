@@ -9,7 +9,7 @@ using passion_project.Data;
 
 namespace passion_project.Areas.Identity.Data.Migrations
 {
-    [DbContext(typeof(AuthDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20210412174240_InitialAuthSchema")]
     partial class InitialAuthSchema
     {
