@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using passion_project.Areas.Identity;
+using passion_project.Entities;
 
 namespace passion_project.Data
 {
@@ -14,6 +16,8 @@ namespace passion_project.Data
             : base(options)
         {
         }
+
+        public DbSet<Book> Books { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
