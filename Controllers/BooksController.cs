@@ -31,12 +31,20 @@ namespace passion_project.Controllers
         [HttpGet("{id}", Name = "GetBook")]
         public async Task<IActionResult> GetById(string id)
         {
-            var book = await LibrivoxAPI.GetBook(id);
-            if (book == null)
+            try
             {
-                return NotFound(id);
+                var book = await LibrivoxAPI.GetBook(id);
+                if (book == null)
+                {
+                    return NotFound(id);
+                }
+                return Ok(book);
             }
-            return Ok(book);
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
         }
 
         [HttpGet("search/{searchTerm}")]

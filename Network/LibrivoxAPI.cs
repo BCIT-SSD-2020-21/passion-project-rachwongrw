@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.ServiceModel.Syndication;
 using System.Xml;
+using System.Text.Json.Serialization;
 
 namespace passion_project.Network
 {
@@ -26,24 +27,48 @@ namespace passion_project.Network
             return books;
         }
 
+        // Used for deserialization in the GetCover function 
+        private class IArchiveModel
+        {
+            [JsonPropertyName("misc")]
+            public IArchiveModelMisc Misc { get; set; }
+        }
+
+        private class IArchiveModelMisc
+        {
+            [JsonPropertyName("image")]
+            public string Image { get; set; }
+        }
+        private static async Task<string> GetCover(string archiveUrl)
+        {
+            var archiveId = archiveUrl.Split('/').Last();
+            var url = String.Format("https://archive.org/details/{0}?output=json", archiveId);
+            var streamTask = client.GetStreamAsync(url);
+            var cover = await JsonSerializer.DeserializeAsync<IArchiveModel>(await streamTask);
+            return cover?.Misc?.Image;
+            
+        }
+
         public static async Task<Book> GetBook(string id)
         {
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var url = String.Format("{0}&id={1}", baseurl, id);
-            try
-            {
-                var streamTask = client.GetStreamAsync(url);
-                var book = await JsonSerializer.DeserializeAsync<BookList>(await streamTask);
-                return book.Books[0];
+            //🤢 Doesnt seem like there's a way to exclude fields, so we have to include every field instead
+            var url = String.Format("{0}&id={1}&extended=1&fields={{url_iarchive,id,title,description,url_text_source,language,copyright_year,num_sections,url_rss,url_librivox,totaltime,totaltimesecs,author}}", baseurl, id);
+             var streamTask = client.GetStreamAsync(url);
+                var book = (await JsonSerializer.DeserializeAsync<BookList>(await streamTask)).Books[0];
+                if (book?.Url_Iarchive != null)
+                {
+                    var cover = await GetCover(book?.Url_Iarchive);
+                    if (cover != null)
+                    {
+                        book.Url_Image = cover;
+                    }
+                }
+                return book;
 
-            }
-            catch (Exception)
-            {
-                return await Task.FromResult<Book>(null);
-            }
-
+           
         }
 
         public static async Task<BookList> SearchBooks(string searchTerm)
