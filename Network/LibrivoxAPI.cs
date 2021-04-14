@@ -22,12 +22,15 @@ namespace passion_project.Network
         //🤢 Doesnt seem like there's a way to exclude fields, so we have to include every field instead
         private static readonly string baseurl = "https://librivox.org/api/feed/audiobooks/limit/20/offset/0?format=json&extended=1&fields={{url_iarchive,id,title,description,url_text_source,language,copyright_year,num_sections,url_rss,url_librivox,totaltime,totaltimesecs,authors}}";
 
-        public static async Task<BookList> GetBookList()
+        public static async Task<BookList> GetBookList(int limit, int offset)
         {
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var streamTask = client.GetStreamAsync(baseurl);
+            var paginatedUrl = "https://librivox.org/api/feed/audiobooks/limit/{0}/offset/{1}?format=json";
+            var url = String.Format(paginatedUrl, limit, offset);
+
+            var streamTask = client.GetStreamAsync(url);
             var books = await JsonSerializer.DeserializeAsync<BookList>(await streamTask);
             foreach (var book in books.Books)
             {
