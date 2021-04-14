@@ -55,7 +55,7 @@ namespace passion_project.Network
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             //🤢 Doesnt seem like there's a way to exclude fields, so we have to include every field instead
-            var url = String.Format("{0}&id={1}&extended=1&fields={{url_iarchive,id,title,description,url_text_source,language,copyright_year,num_sections,url_rss,url_librivox,totaltime,totaltimesecs,author}}", baseurl, id);
+            var url = String.Format("{0}&id={1}&extended=1&fields={{url_iarchive,id,title,description,url_text_source,language,copyright_year,num_sections,url_rss,url_librivox,totaltime,totaltimesecs,authors}}", baseurl, id);
              var streamTask = client.GetStreamAsync(url);
                 var book = (await JsonSerializer.DeserializeAsync<BookList>(await streamTask)).Books[0];
                 if (book?.Url_Iarchive != null)
