@@ -81,30 +81,29 @@ export default function NavBar({ user, onSignOutClicked, onSearch }) {
                   id="menu-appbar"
                   anchorEl={anchorEl}
                   anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
+                    vertical: 'bottom',
+                    horizontal: 'left',
                   }}
                   keepMounted
                   transformOrigin={{
                     vertical: 'top',
-                    horizontal: 'right',
+                    horizontal: 'center',
                   }}
                   open={open}
                   onClose={handleMenuClose}
                 >
-                  <MenuItem>Profile</MenuItem>
+                  <MenuItem>
+                    <Link className={classes.link} to="/profile" color="black">
+                      Profile
+                    </Link>
+                  </MenuItem>
                   <MenuItem onClick={signOut}>Sign Out</MenuItem>
                 </Menu>
               </>
             ) : (
-              <>
-                <Link className={classes.link} to="/profile" color="inherit">
-                  Profile
-                </Link>{" "}
-                <Link className={classes.link} to="/login" color="inherit">
-                  Login
-                </Link>
-              </>
+              <Link className={classes.link} to="/login" color="inherit">
+                Login
+              </Link>
             )}
           </Box>
         </Toolbar>
@@ -185,10 +184,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   link: {
-    color: 'white',
+    color: 'black',
     textDecoration: 'none',
     '&:hover': {
-      color: 'white',
+      color: 'black',
       textDecoration: 'none',
     },
   },
