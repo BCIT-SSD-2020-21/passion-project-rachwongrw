@@ -15,14 +15,17 @@ namespace passion_project.Network
     public class LibrivoxAPI
     {
         private static readonly HttpClient client = new HttpClient();
-        private static readonly string baseurl = "https://librivox.org/api/feed/audiobooks/limit/20/offset/0?format=json";
+        private static readonly string baseurl = "https://librivox.org/api/feed/audiobooks?format=json";
 
-        public static async Task<BookList> GetBookList()
+        public static async Task<BookList> GetBookList(int limit, int offset)
         {
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var streamTask = client.GetStreamAsync(baseurl);
+            var paginatedUrl = "https://librivox.org/api/feed/audiobooks/limit/{0}/offset/{1}?format=json";
+            var url = String.Format(paginatedUrl, limit, offset);
+
+            var streamTask = client.GetStreamAsync(url);
             var books = await JsonSerializer.DeserializeAsync<BookList>(await streamTask);
             return books;
         }
@@ -41,11 +44,13 @@ namespace passion_project.Network
         }
         private static async Task<string> GetCover(string archiveUrl)
         {
+            // The name of the archive.org resource is the last thing in the URL
             var archiveId = archiveUrl.Split('/').Last();
-            var url = String.Format("https://archive.org/details/{0}?output=json", archiveId);
+            var url = $"https://archive.org/details/{archiveId}?output=json";
             var streamTask = client.GetStreamAsync(url);
             var cover = await JsonSerializer.DeserializeAsync<IArchiveModel>(await streamTask);
-            return cover?.Misc?.Image;
+            // The API returns a thumb image, but the full sized image has the same url without _thumb at the end of the filename
+            return cover?.Misc?.Image.Replace("_thumb", "");
             
         }
 
@@ -55,8 +60,12 @@ namespace passion_project.Network
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             //🤢 Doesnt seem like there's a way to exclude fields, so we have to include every field instead
-            var url = String.Format("{0}&id={1}&extended=1&fields={{url_iarchive,id,title,description,url_text_source,language,copyright_year,num_sections,url_rss,url_librivox,totaltime,totaltimesecs,authors}}", baseurl, id);
-             var streamTask = client.GetStreamAsync(url);
+            try
+            {
+
+
+                var url = String.Format("{0}&id={1}&extended=1&fields={{url_iarchive,id,title,description,url_text_source,language,copyright_year,num_sections,url_rss,url_librivox,totaltime,totaltimesecs,authors}}", baseurl, id);
+                var streamTask = client.GetStreamAsync(url);
                 var book = (await JsonSerializer.DeserializeAsync<BookList>(await streamTask)).Books[0];
                 if (book?.Url_Iarchive != null)
                 {
@@ -67,8 +76,12 @@ namespace passion_project.Network
                     }
                 }
                 return book;
+            }
+            catch (Exception)
+            {
+                return await Task.FromResult<Book>(null);
 
-           
+            }
         }
 
         public static async Task<BookList> SearchBooks(string searchTerm)

@@ -7,7 +7,7 @@ const baseUrl = 'https://localhost:5001'
 // Retrieves all books from librivox API.
 export async function getAllBooks(limit, offset) {
   try {
-    return await axios.get(`${baseUrl}/api/books`, {data: {limit, offset}});
+    return await axios.get(`${baseUrl}/api/books/limit=${limit}&offset=${offset}`);
   } catch (error) {
     console.log(error)
   }
