@@ -39,6 +39,7 @@ namespace passion_project.Entities
         [JsonPropertyName("totaltimesecs")]
         public int Total_Time_Secs { get; set; }
         [JsonPropertyName("authors")]
+        // The following lists are not mapped because they need more entities created to map to
         [NotMapped]
         public List<Author> Authors { get; set; }
         [JsonPropertyName("sections")]

@@ -48,7 +48,6 @@ namespace passion_project
             }
 
             app.UseHttpsRedirection();
-            app.UseAuthorization();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
