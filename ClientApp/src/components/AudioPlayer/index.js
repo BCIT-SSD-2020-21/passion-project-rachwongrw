@@ -40,7 +40,7 @@ export default function AudioPlayer({book}) {
         <>
           <CardMedia
             className={classes.cover}
-            image="https://m.media-amazon.com/images/I/611Eot7+zJL._SL500_.jpg"
+            image={book.url_Image}
             title={book.title}
           />
           <div className={classes.details}>
