@@ -9,11 +9,12 @@ import {
   Tab,
   TextField,
   Button,
+  Typography,
 } from '@material-ui/core';
 import { CloseRounded } from '@material-ui/icons';
 import React, { useState } from 'react';
 
-export default function Login({ closeClicked, submitted }) {
+export default function Login({ closeClicked, submitted, error, setError }) {
   const classes = useStyles();
   const [tabValue, setTabValue] = useState(0);
   const [email, setEmail] = useState('');
@@ -22,6 +23,7 @@ export default function Login({ closeClicked, submitted }) {
 
   const handleChange = (e, newTabValue) => {
     setTabValue(newTabValue);
+    setError(false);
   };
 
   const handleSubmit = (e) => {
@@ -103,6 +105,9 @@ export default function Login({ closeClicked, submitted }) {
               variant="outlined"
             />
           )}
+          {error &&
+            <Typography className={classes.errorMessage}>Invalid Email or Password!</Typography>
+          }
           <Button type="submit" className={classes.submitBtn}>
             SUBMIT
           </Button>
@@ -147,5 +152,9 @@ const useStyles = makeStyles((theme) => ({
   submitBtn: {
     marginTop: 20,
     marginBottom: 35,
+  },
+  errorMessage: {
+    marginTop: 20,
+    color: 'red',
   },
 }));
