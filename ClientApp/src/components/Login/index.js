@@ -79,7 +79,6 @@ export default function Login({ closeClicked, submitted }) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={classes.formInput}
-            id="outlined-basic"
             label="Email"
             variant="outlined"
           />
@@ -88,7 +87,6 @@ export default function Login({ closeClicked, submitted }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={classes.formInput}
-            id="outlined-basic"
             label="Password"
             variant="outlined"
           />
@@ -98,7 +96,6 @@ export default function Login({ closeClicked, submitted }) {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className={classes.formInput}
-              id="outlined-basic"
               label="Confirm Password"
               variant="outlined"
             />

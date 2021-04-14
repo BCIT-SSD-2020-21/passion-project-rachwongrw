@@ -39,7 +39,7 @@ export default function NavBar({ user, onSignOutClicked, onSearch }) {
     onSearch({ searchValue });
     setSearchValue('');
   }
-
+  console.log("header nav user", user)
   return (
     <div className={classes.root}>
       <AppBar className={classes.nav} position="static">
@@ -97,9 +97,14 @@ export default function NavBar({ user, onSignOutClicked, onSearch }) {
                 </Menu>
               </>
             ) : (
-              <Link className={classes.link} to="/login" color="inherit">
-                Login
-              </Link>
+              <>
+                <Link className={classes.link} to="/profile" color="inherit">
+                  Profile
+                </Link>{" "}
+                <Link className={classes.link} to="/login" color="inherit">
+                  Login
+                </Link>
+              </>
             )}
           </Box>
         </Toolbar>
