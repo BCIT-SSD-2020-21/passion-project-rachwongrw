@@ -13,12 +13,12 @@ namespace passion_project.Controllers
     [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
-        [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        [HttpGet("limit={limit}&offset={offset}")]
+        public async Task<IActionResult> GetAsync(int limit, int offset)
         {
             try
             {
-                var books = await LibrivoxAPI.GetBookList();
+                var books = await LibrivoxAPI.GetBookList(limit, offset);
                 return Ok(books.Books);
             }
             catch (Exception e)
