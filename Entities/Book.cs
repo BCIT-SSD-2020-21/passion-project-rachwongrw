@@ -32,8 +32,15 @@ namespace passion_project.Entities
         public string Url_Project { get; set; }
         [JsonPropertyName("url_librivox")]
         public string Url_Librivox { get; set; }
+
         [JsonPropertyName("url_other")]
         public string Url_Other { get; set; }
+
+        [JsonPropertyName("url_iarchive")]
+        public string Url_Iarchive { get; set; }
+
+        public string Url_Image { get; set; }
+
         [JsonPropertyName("totaltime")]
         public string Total_time { get; set; }
         [JsonPropertyName("totaltimesecs")]
