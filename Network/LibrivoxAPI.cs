@@ -15,14 +15,17 @@ namespace passion_project.Network
     public class LibrivoxAPI
     {
         private static readonly HttpClient client = new HttpClient();
-        private static readonly string baseurl = "https://librivox.org/api/feed/audiobooks/limit/20/offset/0?format=json";
+        private static readonly string baseurl = "https://librivox.org/api/feed/audiobooks?format=json";
 
-        public static async Task<BookList> GetBookList()
+        public static async Task<BookList> GetBookList(int limit, int offset)
         {
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var streamTask = client.GetStreamAsync(baseurl);
+            var paginatedUrl = "https://librivox.org/api/feed/audiobooks/limit/{0}/offset/{1}?format=json";
+            var url = String.Format(paginatedUrl, limit, offset);
+
+            var streamTask = client.GetStreamAsync(url);
             var books = await JsonSerializer.DeserializeAsync<BookList>(await streamTask);
             return books;
         }
