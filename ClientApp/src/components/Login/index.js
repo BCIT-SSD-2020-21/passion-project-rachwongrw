@@ -41,18 +41,12 @@ export default function Login({ closeClicked, submitted, error, setError }) {
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} elevation={0}>
       <Box className={classes.headerContainer}>
         <CardHeader
           className={classes.header}
           title={tabValue === 0 ? 'Login' : 'Sign Up'}
         ></CardHeader>
-        <IconButton
-          onClick={() => closeClicked()}
-          className={classes.closeButton}
-        >
-          <CloseRounded />
-        </IconButton>
       </Box>
       <CardContent>
         <Tabs
