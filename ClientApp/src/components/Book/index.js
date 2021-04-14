@@ -1,14 +1,22 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Button, Card, Typography } from '@material-ui/core';
+import { Box, Button, Card, CardMedia, Typography } from '@material-ui/core';
 
 export default function Audiobook({ cardClicked, book }) {
   const { id, title } = book;
   const classes = useStyles();
+  console.log("book -", book)
   return (
     <Box className={classes.root}>
       <Card variant="outlined" className={classes.card}>
         <Typography className={classes.bookTitle} variant="h6">{title}</Typography>
+        {/* { !!book.url_Image &&
+          <CardMedia
+            className={classes.cover}
+            image={book.url_Image}
+            title={title}
+          />} */}
+          {/* --- book img url not included in get books api yet --- */}
         <Button className={classes.button} onClick={() => cardClicked({ id })}>
           View
         </Button>
@@ -40,6 +48,10 @@ const useStyles = makeStyles({
       transform: 'scaleY(1.05) scaleX(1.05)',
       borderColor: 'rgba(255,165,0,0.5)',
     },
+  },
+  cover: {
+    width: 200,
+    height: 200,
   },
   cardHeader: {
     textAlign: 'center',

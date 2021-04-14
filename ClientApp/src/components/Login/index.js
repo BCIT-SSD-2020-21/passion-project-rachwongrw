@@ -41,18 +41,12 @@ export default function Login({ closeClicked, submitted, error, setError }) {
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} elevation={0}>
       <Box className={classes.headerContainer}>
         <CardHeader
           className={classes.header}
           title={tabValue === 0 ? 'Login' : 'Sign Up'}
         ></CardHeader>
-        <IconButton
-          onClick={() => closeClicked()}
-          className={classes.closeButton}
-        >
-          <CloseRounded />
-        </IconButton>
       </Box>
       <CardContent>
         <Tabs
@@ -81,7 +75,6 @@ export default function Login({ closeClicked, submitted, error, setError }) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={classes.formInput}
-            id="outlined-basic"
             label="Email"
             variant="outlined"
           />
@@ -90,7 +83,6 @@ export default function Login({ closeClicked, submitted, error, setError }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={classes.formInput}
-            id="outlined-basic"
             label="Password"
             variant="outlined"
           />
@@ -100,7 +92,6 @@ export default function Login({ closeClicked, submitted, error, setError }) {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className={classes.formInput}
-              id="outlined-basic"
               label="Confirm Password"
               variant="outlined"
             />

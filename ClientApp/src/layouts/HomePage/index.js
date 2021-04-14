@@ -14,7 +14,7 @@ export default function HomePage() {
   const totalPages = 15987;
 
   const cardClicked = async (data) => {
-    history.push(`/${data.id}`);
+    history.push(`/books/${data.id}`);
   };
 
   useEffect(() => {

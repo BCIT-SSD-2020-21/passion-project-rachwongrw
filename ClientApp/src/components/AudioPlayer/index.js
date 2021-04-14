@@ -18,10 +18,9 @@ export default function AudioPlayer({book}) {
   useEffect(() => {
     (async () => {
       const response = await getAudioFiles(bookId);
-      console.log("get tracks", response.data.section)
       setTracks(response.data.section)
     })();
-  },[bookId])
+  },[])
 
   const playAudio = (id) => {
     const audioEl = document.getElementById(id)
@@ -41,7 +40,7 @@ export default function AudioPlayer({book}) {
         <>
           <CardMedia
             className={classes.cover}
-            image="https://m.media-amazon.com/images/I/611Eot7+zJL._SL500_.jpg"
+            image={book.url_Image}
             title={book.title}
           />
           <div className={classes.details}>
