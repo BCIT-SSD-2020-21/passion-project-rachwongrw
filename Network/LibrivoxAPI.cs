@@ -9,13 +9,18 @@ using System.Threading.Tasks;
 using System.ServiceModel.Syndication;
 using System.Xml;
 using System.Text.Json.Serialization;
+using System.Collections.Concurrent;
 
 namespace passion_project.Network
 {
     public class LibrivoxAPI
     {
         private static readonly HttpClient client = new HttpClient();
-        private static readonly string baseurl = "https://librivox.org/api/feed/audiobooks/limit/20/offset/0?format=json";
+        // Used to cache cover image URLS, so we aren't hitting 2 different APIS on every request. This could be expanded
+        private static readonly ConcurrentDictionary<string, string> coverCache = new ConcurrentDictionary<string, string>();
+
+        //🤢 Doesnt seem like there's a way to exclude fields, so we have to include every field instead
+        private static readonly string baseurl = "https://librivox.org/api/feed/audiobooks/limit/20/offset/0?format=json&extended=1&fields={{url_iarchive,id,title,description,url_text_source,language,copyright_year,num_sections,url_rss,url_librivox,totaltime,totaltimesecs,authors}}";
 
         public static async Task<BookList> GetBookList()
         {
@@ -24,6 +29,11 @@ namespace passion_project.Network
 
             var streamTask = client.GetStreamAsync(baseurl);
             var books = await JsonSerializer.DeserializeAsync<BookList>(await streamTask);
+            foreach (var book in books.Books)
+            {
+                var cover = await GetCover(book?.Url_Iarchive);
+                book.Url_Image = cover;
+            }
             return books;
         }
 
@@ -39,16 +49,32 @@ namespace passion_project.Network
             [JsonPropertyName("image")]
             public string Image { get; set; }
         }
+
+        // The result is cached because retrieving a cover from a different API on every request takes too much time.
         private static async Task<string> GetCover(string archiveUrl)
         {
+            if (archiveUrl == null)
+            {
+                return await Task.FromResult<string>(null);
+            }
+
+            if (coverCache.ContainsKey(archiveUrl))
+            {
+                return coverCache[archiveUrl];
+            }
+
             // The name of the archive.org resource is the last thing in the URL
             var archiveId = archiveUrl.Split('/').Last();
             var url = $"https://archive.org/details/{archiveId}?output=json";
             var streamTask = client.GetStreamAsync(url);
-            var cover = await JsonSerializer.DeserializeAsync<IArchiveModel>(await streamTask);
+            var archive = await JsonSerializer.DeserializeAsync<IArchiveModel>(await streamTask);
             // The API returns a thumb image, but the full sized image has the same url without _thumb at the end of the filename
-            return cover?.Misc?.Image.Replace("_thumb", "");
-            
+            var cover = archive?.Misc?.Image.Replace("_thumb", "");
+            if (cover != null)
+            {
+                coverCache[archiveUrl] = cover;
+            }
+            return cover;
         }
 
         public static async Task<Book> GetBook(string id)
@@ -56,12 +82,10 @@ namespace passion_project.Network
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            //🤢 Doesnt seem like there's a way to exclude fields, so we have to include every field instead
             try
             {
 
-
-                var url = String.Format("{0}&id={1}&extended=1&fields={{url_iarchive,id,title,description,url_text_source,language,copyright_year,num_sections,url_rss,url_librivox,totaltime,totaltimesecs,authors}}", baseurl, id);
+                var url = String.Format("{0}&id={1}", baseurl, id);
                 var streamTask = client.GetStreamAsync(url);
                 var book = (await JsonSerializer.DeserializeAsync<BookList>(await streamTask)).Books[0];
                 if (book?.Url_Iarchive != null)
@@ -77,7 +101,6 @@ namespace passion_project.Network
             catch (Exception)
             {
                 return await Task.FromResult<Book>(null);
-
             }
         }
 
