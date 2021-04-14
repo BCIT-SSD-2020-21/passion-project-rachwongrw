@@ -23,10 +23,10 @@ export default function LoginPage({ setToken }) {
     if (result) {
       setToken(result);
       history.push('/');
+    } else {
+      setError(true);
+      history.push('/login');
     }
-
-    setError(true);
-    history.push('/login');
   };
 
   return (
