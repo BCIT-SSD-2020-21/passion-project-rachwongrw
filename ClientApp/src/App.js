@@ -7,6 +7,7 @@ import HeaderNavigation from './layouts/HeaderNavigation';
 import LoginPage from './layouts/LoginPage';
 import useLocalStorage from 'react-use-localstorage';
 import jwtDecode from 'jwt-decode';
+import SearchPage from './layouts/SearchPage';
 
 export default function App() {
   const classes = useStyles();
@@ -23,7 +24,10 @@ export default function App() {
   return (
     <div>
       <Router>
-        <HeaderNavigation user={user} setToken={setToken} />
+        <HeaderNavigation 
+          user={user} 
+          setToken={setToken}
+        />
         <main className={classes.root}>
           <Switch>
             <Route exact path="/">
@@ -34,6 +38,9 @@ export default function App() {
             </Route>
             <Route exact path="/:bookId">
               <DetailPage />
+            </Route>
+            <Route exact path="/search/:searchTerm">
+              <SearchPage />
             </Route>
           </Switch>
         </main>

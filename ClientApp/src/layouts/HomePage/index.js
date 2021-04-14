@@ -16,7 +16,7 @@ export default function HomePage() {
   useEffect(() => {
     (async () => {
       const response = await getAllBooks();
-      setBooks(response.data);
+      setBooks(response.data);  
     })();
   }, []);
 

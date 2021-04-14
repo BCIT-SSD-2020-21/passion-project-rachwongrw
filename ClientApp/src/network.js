@@ -1,10 +1,13 @@
 import axios from 'axios';
 const baseUrl = 'https://localhost:5001'
 
+// Use this URL when running the debugger in order to hit breakpoints.
+// const baseUrl = 'https://localhost:44303'
+
 // Retrieves all books from librivox API.
-export async function getAllBooks() {
+export async function getAllBooks(limit, offset) {
   try {
-    return await axios.get(`${baseUrl}/api/books`);
+    return await axios.get(`${baseUrl}/api/books`, {data: {limit, offset}});
   } catch (error) {
     console.log(error)
   }
@@ -36,5 +39,15 @@ export async function loginUser(data) {
     return response.data.token;
   } catch (error) {
     console.log(error)
+  }
+}
+
+export async function searchBooks(searchTerm) {
+  try {
+    const response = await axios.get(`${baseUrl}/api/books/search/${searchTerm}`);
+    console.log('Search Response:', response)
+    return response.data;
+  } catch (error) {
+    console.log(error);
   }
 }

@@ -44,6 +44,25 @@ namespace passion_project.Network
 
         }
 
+        public static async Task<BookList> SearchBooks(string searchTerm)
+        {
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var searchUrl = "https://librivox.org/api/feed/audiobooks/title/^{0}?format=json";
+            var url = String.Format(searchUrl, searchTerm);
+            try
+            {
+                var streamTask = client.GetStreamAsync(url);
+                var books = await JsonSerializer.DeserializeAsync<BookList>(await streamTask);
+                return books;
+            }
+            catch (Exception)
+            {
+                return await Task.FromResult<BookList>(null);
+            }
+        }
+
         // Returns null, needs further adjustment
         public static async Task<Track> GetTrack(string id)
         {
