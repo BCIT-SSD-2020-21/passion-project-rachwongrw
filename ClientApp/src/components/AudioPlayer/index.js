@@ -5,7 +5,7 @@ import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import PauseIcon from '@material-ui/icons/Pause';
-import { getAudioFiles } from '../../network';
+import { getAudioFiles, addToBookList } from '../../network';
 import { useParams } from 'react-router-dom';
 
 export default function AudioPlayer({book}) {
@@ -22,10 +22,13 @@ export default function AudioPlayer({book}) {
     })();
   },[bookId])
 
-  const playAudio = (id) => {
+  const playAudio = async (id) => {
     const audioEl = document.getElementById(id)
     audioEl.paused ? audioEl.play() : audioEl.pause()
     setAudioPause(!audioPaused)
+    
+    const response = await addToBookList(bookId);
+    console.log("addToBookList", response.data)
   }
 
   const changeTrack = (dir) => {

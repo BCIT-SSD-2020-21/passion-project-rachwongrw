@@ -1,10 +1,20 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Avatar, Button, TextField, Typography, makeStyles } from '@material-ui/core';
 import UserModal from '../Modal';
+import { getUser } from '../../network';
 
 export default function Profile({user}) {
   const [open, setOpen] = useState(false);
+  const [currentUser, setUser] = useState(user);
   const classes = useStyles()
+
+  useEffect(() => {
+    (async () => {
+      const response = await getUser();
+      console.log("get user response", response.data)
+      setUser(response.data)
+    })();
+  }, []);
 
   const handleOpen = () => {
     setOpen(true);
@@ -14,8 +24,22 @@ export default function Profile({user}) {
     setOpen(false);
   };
 
-  const handleChange = (val) => {
-    console.log("handle change")
+  const handleChange = (field, val) => {
+    console.log("handle change", field, val)
+    switch (field) {
+      case 'fName':
+        
+        break;
+      case 'lName':
+      
+        break;
+      case 'img':
+
+        break;
+      default:
+        break;
+    }
+    
   }
 
   const body = (
@@ -49,12 +73,17 @@ export default function Profile({user}) {
         </Typography>
         <hr/>
         <p><strong>Email</strong>: <i>{user.sub}</i></p>
-        <p><strong>Books Owned</strong>: <i>23</i></p>
+        <p><strong>Books Listened To</strong>: <i>{currentUser?.booksListened?.length}</i></p>
         <br/>
         <Typography variant="body1">
           <strong>Your Books</strong>
         </Typography>
         <hr/>
+        {
+          currentUser?.booksListened?.map(book =>
+            <p key={book.id}><strong>Alexander Dumas</strong>: <i>{book.title}</i></p>
+          )
+        }
       </div>
       <UserModal body={body} handleClose={handleClose} open={open}/>
     </div>

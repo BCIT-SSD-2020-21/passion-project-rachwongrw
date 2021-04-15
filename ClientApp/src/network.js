@@ -1,6 +1,6 @@
 import axios from 'axios';
 const baseUrl = ''
-
+const token = localStorage.getItem('token')
 // Use this URL when running the debugger in order to hit breakpoints.
 // const baseUrl = 'https://localhost:44303'
 
@@ -55,6 +55,32 @@ export async function searchBooks(searchTerm) {
 export async function getAudioFiles(id) {
   try {
     return await axios.get(`${baseUrl}/api/tracks/${id}`)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function getUser() {
+  try {
+    
+    return await axios.get(`${baseUrl}/api/user/profile`, {
+      headers:{ 
+        "Authorization": `Bearer ${token}` 
+      }
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+export async function addToBookList(id) {
+  try {
+    return await axios.post(`${baseUrl}/api/user/listened/${id}`, null, {
+      headers:{ 
+        "Authorization": `Bearer ${token}` 
+      }
+    })
   } catch (error) {
     console.log(error)
   }
