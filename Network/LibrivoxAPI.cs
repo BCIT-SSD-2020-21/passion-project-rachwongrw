@@ -19,16 +19,22 @@ namespace passion_project.Network
         // Used to cache cover image URLS, so we aren't hitting 2 different APIS on every request. This could be expanded
         private static readonly ConcurrentDictionary<string, string> coverCache = new ConcurrentDictionary<string, string>();
 
+        private static int DEFAULT_LIMIT = 20;
+        private static int DEFAULT_OFFSET = 0;
+
         //🤢 Doesnt seem like there's a way to exclude fields, so we have to include every field instead
-        private static readonly string baseurl = "https://librivox.org/api/feed/audiobooks/limit/20/offset/0?format=json&extended=1&fields={{url_iarchive,id,title,description,url_text_source,language,copyright_year,num_sections,url_rss,url_librivox,totaltime,totaltimesecs,authors}}";
+        private static readonly string baseurl = "https://librivox.org/api/feed/audiobooks/limit/{0}/offset/{1}?format=json&extended=1&fields={{url_iarchive,id,title,description,url_text_source,language,copyright_year,num_sections,url_rss,url_librivox,totaltime,totaltimesecs,authors}}";
+        private static readonly string paginatedurl = String.Format(
+            baseurl,
+            DEFAULT_LIMIT,
+            DEFAULT_OFFSET);
 
         public static async Task<BookList> GetBookList(int limit, int offset)
         {
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            var paginatedUrl = "https://librivox.org/api/feed/audiobooks/limit/{0}/offset/{1}?format=json";
-            var url = String.Format(paginatedUrl, limit, offset);
+          
+            var url = String.Format(baseurl, limit, offset);
 
             var streamTask = client.GetStreamAsync(url);
             var books = await JsonSerializer.DeserializeAsync<BookList>(await streamTask);
@@ -88,7 +94,7 @@ namespace passion_project.Network
             try
             {
 
-                var url = String.Format("{0}&id={1}", baseurl, id);
+                var url = String.Format("{0}&id={1}", paginatedurl, id);
                 var streamTask = client.GetStreamAsync(url);
                 var book = (await JsonSerializer.DeserializeAsync<BookList>(await streamTask)).Books[0];
                 if (book?.Url_Iarchive != null)
