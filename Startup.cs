@@ -24,7 +24,8 @@ namespace passion_project
         {
             services.AddDbContext<ApplicationDbContext>(opt =>
                                    opt.UseSqlServer(Configuration.GetConnectionString("AuthConnection")));
-            services.AddControllersWithViews().AddNewtonsoftJson();
+            // Without ignoring the reference loop the serializer blows up when returning a user object
+            services.AddControllersWithViews().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

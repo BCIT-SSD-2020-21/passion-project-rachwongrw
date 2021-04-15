@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using passion_project.Areas.Identity;
 using passion_project.Data;
+using passion_project.Network;
 using passion_project.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -33,11 +35,16 @@ namespace passion_project.Controllers
             try
             {
                 var userId = HttpContext.User.Claims.ElementAt(0).Value;
-                var user = _db.Users.Cast<ApplicationUser>().Where(user => user.Email == userId).FirstOrDefault();
+                var user = _db.Users.Cast<ApplicationUser>()
+                    .Include(user => user.BooksListened)
+                    .Where(user => user.Email == userId)
+                    .FirstOrDefault();
+
                 if (user == null)
                 {
                     return NotFound();
                 }
+
                 var userVm = new UserVM()
                 {
                     Id = user.Id,
@@ -54,42 +61,36 @@ namespace passion_project.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet]
-        [Route("listened")]
-        public IActionResult GetAllListened()
-
-        {
-            try
-            {
-                var userId = HttpContext.User.Claims.ElementAt(0).Value;
-                var listened = _db.Users
-                    .Where(u => u.Id == userId);
-                if (listened == null)
-                {
-                    return NotFound();
-                }
-                return Ok(listened);
-            } catch (Exception e)
-            {
-                return BadRequest(e);
-            }
-        }
-
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("listened/{Id}")]
-        public IActionResult AddListened(string Id)
+        public async Task<IActionResult> AddListenedAsync(string Id)
 
         {
             try
             {
                 var userId = HttpContext.User.Claims.ElementAt(0).Value;
-                var user = _db.Users.SingleOrDefault(u => u.Id == userId);
-                if (user == null)
+                var user = _db.Users
+                    .Include(user => user.BooksListened)
+                    .SingleOrDefault(u => u.Email == userId);
+
+                var book = await LibrivoxAPI.GetBook(Id);
+                if (user == null || book == null)
                 {
                     return NotFound();
                 }
-                
+
+                var bookExists = _db.Books.SingleOrDefault(b => b.Id == Id);
+                if (bookExists == null)
+                {
+                    _db.Books.Add(book);
+                }
+
+                if (user.BooksListened.SingleOrDefault(b => b.Id == Id) == null)
+                {
+                    user.BooksListened.Add(book);
+                }
+                _db.SaveChanges();
+
                 return Ok(user);
             }
             catch (Exception e)
