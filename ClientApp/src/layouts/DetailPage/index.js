@@ -15,7 +15,7 @@ export default function DetailPage() {
       const response = await getBookById(bookId);
       setBook(response.data)
     })();
-  }, [])
+  }, [bookId])
 
   return (
     <div className={classes.root}>

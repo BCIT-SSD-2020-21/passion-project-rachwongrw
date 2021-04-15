@@ -10,7 +10,7 @@ export default function HomePage() {
   const history = useHistory();
   const classes = useStyles();
   const [offset, setOffset] = useState(0);
-  const limit = 10;
+  const limit = 12;
   const totalPages = 15987;
 
   const cardClicked = async (data) => {
@@ -65,6 +65,7 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
+    maxWidth: 1200
   },
   paginationContainer: {
     marginTop: 20

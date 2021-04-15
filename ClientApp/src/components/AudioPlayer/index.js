@@ -20,7 +20,7 @@ export default function AudioPlayer({book}) {
       const response = await getAudioFiles(bookId);
       setTracks(response.data.section)
     })();
-  },[])
+  },[bookId])
 
   const playAudio = (id) => {
     const audioEl = document.getElementById(id)
