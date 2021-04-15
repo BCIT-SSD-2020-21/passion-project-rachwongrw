@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
@@ -59,6 +60,7 @@ namespace passion_project.Entities
         [NotMapped]
         public List<string> Translators { get; set; }
         [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<ApplicationUser> Users { get; set; }
     }
 }
