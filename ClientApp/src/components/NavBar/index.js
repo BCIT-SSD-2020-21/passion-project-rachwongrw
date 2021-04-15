@@ -151,7 +151,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginRight: theme.spacing(2),
-    marginLeft: 0,
+    marginLeft: '2em',
     width: '100%',
     // [theme.breakpoints.up('sm')]: {
     //   marginLeft: theme.spacing(3),

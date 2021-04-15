@@ -1,11 +1,44 @@
-import React from 'react';
-import { Avatar, Typography, makeStyles } from '@material-ui/core';
+import React, {useState} from 'react';
+import { Avatar, Button, TextField, Typography, makeStyles } from '@material-ui/core';
+import UserModal from '../Modal';
 
-export default function Profile() {
+export default function Profile({user}) {
+  const [open, setOpen] = useState(false);
   const classes = useStyles()
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleChange = () => {
+    console.log("handle change")
+  }
+
+  const body = (
+    <form>
+      <Typography variant="h5" style={{paddingBottom: "1em"}}>Update Profile Image</Typography>
+      <TextField
+          label='Profile Image'
+          placeholder="Place image URL here"
+          onChange={(e) => handleChange('profileImage', e.target.value)}
+          className='text-field'
+          type="url"
+          defaultValue={user?.profileImage}
+        />
+        <Button className={classes.submit} type='submit'>
+          Save
+        </Button>
+    </form>
+  )
+  
+  
   return (
     <div className={classes.root}>
-      <Avatar src="https://images.unsplash.com/photo-1608504174559-b9eeee51c568?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" className={classes.large} />
+      <Avatar src={user.img} className={classes.avatar} onClick={handleOpen}/>
       <br/>
       <Typography variant="h6" style={{marginBottom: "1em"}}>
         Sarah Young
@@ -15,7 +48,7 @@ export default function Profile() {
           <strong>Your Details</strong>
         </Typography>
         <hr/>
-        <p><strong>Email</strong>: <i>syoung@me.ca</i></p>
+        <p><strong>Email</strong>: <i>{user.sub}</i></p>
         <p><strong>Books Owned</strong>: <i>23</i></p>
         <br/>
         <Typography variant="body1">
@@ -23,6 +56,7 @@ export default function Profile() {
         </Typography>
         <hr/>
       </div>
+      <UserModal body={body} handleClose={handleClose} open={open}/>
     </div>
   );
 }
@@ -35,9 +69,22 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     width: "75vw"
   },
-  large: {
+  avatar: {
     width: theme.spacing(17),
     height: theme.spacing(17),
-    margin: '0 auto'
+    margin: '0 auto',
+    '&:hover':{
+      cursor: "pointer",
+      opacity: 0.7
+    }
   },
+  submit: { 
+    background: "#ffa500",
+    color: "white",
+    border: "1px solid  #ffa500",
+    "&:hover" :{
+      color:  "#ffa500",
+      border: "1px solid  #ffa500"
+    }
+  }
 }));

@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using passion_project.Data;
 using Microsoft.EntityFrameworkCore;
+using passion_project.Areas.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace passion_project
 {
@@ -26,6 +28,17 @@ namespace passion_project
                                    opt.UseSqlServer(Configuration.GetConnectionString("AuthConnection")));
             services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddCors();
+
+            // password difficulty
+            services.Configure<IdentityOptions>(o =>
+            {
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequiredLength = 6;
+            });
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

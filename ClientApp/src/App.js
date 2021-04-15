@@ -51,7 +51,7 @@ export default function App() {
               <DetailPage />
             </Route>
             <PrivateRoute path="/profile">
-              <ProfilePage />
+              <ProfilePage user={user} />
             </PrivateRoute>
             
           </Switch>
