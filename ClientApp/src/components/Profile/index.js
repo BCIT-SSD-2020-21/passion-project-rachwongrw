@@ -14,24 +14,24 @@ export default function Profile({user}) {
     setOpen(false);
   };
 
-  const handleChange = () => {
+  const handleChange = (val) => {
     console.log("handle change")
   }
 
   const body = (
-    <form>
+    <form style={{textAlign: "center"}}>
       <Typography variant="h5" style={{paddingBottom: "1em"}}>Update Profile Image</Typography>
       <TextField
-          label='Profile Image'
-          placeholder="Place image URL here"
-          onChange={(e) => handleChange('profileImage', e.target.value)}
-          className='text-field'
-          type="url"
-          defaultValue={user?.profileImage}
-        />
-        <Button className={classes.submit} type='submit'>
-          Save
-        </Button>
+        label='Profile Image'
+        placeholder="Place image URL here"
+        onChange={(e) => handleChange(e.target.value)}
+        className='text-field'
+        type="url"
+        defaultValue={user?.profileImage}
+      />
+      <Button className={classes.submit} type='submit'>
+        Save
+      </Button>
     </form>
   )
   
@@ -82,6 +82,8 @@ const useStyles = makeStyles((theme) => ({
     background: "#ffa500",
     color: "white",
     border: "1px solid  #ffa500",
+    paddingLeft: 30,
+    paddingRight: 30,
     "&:hover" :{
       color:  "#ffa500",
       border: "1px solid  #ffa500"
