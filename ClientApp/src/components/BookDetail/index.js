@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function BookDetail({ book }) {
   const classes = useStyles();
-  console.log("book details", book)
+  
   return (
     <div style={{marginBottom: '1em'}}>
       {book && (

@@ -1,12 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Button, Card, CardMedia, Typography } from '@material-ui/core';
+import { Box, Card } from '@material-ui/core';
 
 export default function Audiobook({ cardClicked, book }) {
-  const { id, title } = book;
   const classes = useStyles();
   return (
-    <Box className={classes.root} onClick={() => cardClicked({ id })}>
+    <Box className={classes.root} onClick={() => cardClicked({ id: book.id })}>
       <Card variant="outlined" className={classes.card} style={{background: `url(${book.url_Image})`, backgroundSize: "contain"}}>
       </Card>
     </Box>
@@ -35,6 +34,7 @@ const useStyles = makeStyles({
       transition: 'all 1s',
       transform: 'scaleY(1.05) scaleX(1.05)',
       borderColor: 'rgba(255,165,0,0.5)',
+      cursor: "pointer"
     },
   },
   cover: {
