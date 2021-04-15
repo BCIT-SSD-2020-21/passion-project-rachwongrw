@@ -11,7 +11,7 @@ export default function Profile({user}) {
   useEffect(() => {
     (async () => {
       const response = await getUser();
-      console.log("get user response", response.data)
+      console.log("get user response", response?.data)
       setUser(response.data)
     })();
   }, []);
@@ -81,7 +81,7 @@ export default function Profile({user}) {
         <hr/>
         {
           currentUser?.booksListened?.map(book =>
-            <p key={book.id}><strong>Alexander Dumas</strong>: <i>{book.title}</i></p>
+            <p key={book.id}><strong>Author Name Here</strong>: <i>{book.title}</i></p>
           )
         }
       </div>

@@ -62,7 +62,6 @@ export async function getAudioFiles(id) {
 
 export async function getUser() {
   try {
-    
     return await axios.get(`${baseUrl}/api/user/profile`, {
       headers:{ 
         "Authorization": `Bearer ${token}` 
