@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
+using passion_project.Areas.Identity;
 using passion_project.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -18,11 +19,11 @@ namespace passion_project.Controllers
     public class AuthController : Controller
     {
         private readonly IConfiguration _config;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private IServiceProvider _serviceProvider;
 
-        public AuthController(IConfiguration config, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IServiceProvider serviceProvider)
+        public AuthController(IConfiguration config, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IServiceProvider serviceProvider)
         {
             _config = config;
             _signInManager = signInManager;
@@ -35,7 +36,7 @@ namespace passion_project.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = registerVM.Email, Email = registerVM.Email, EmailConfirmed = true };
+                var user = new ApplicationUser { UserName = registerVM.Email, Email = registerVM.Email, EmailConfirmed = true };
                 var result = await _userManager.CreateAsync(user, registerVM.Password);
                 if (result.Succeeded)
                 {
@@ -82,7 +83,7 @@ namespace passion_project.Controllers
             return Json(jsonResponse);
         }
 
-        string GenerateJSONWebToken(IdentityUser user)
+        string GenerateJSONWebToken(ApplicationUser user)
         {
             var claims = new List<Claim>
             {

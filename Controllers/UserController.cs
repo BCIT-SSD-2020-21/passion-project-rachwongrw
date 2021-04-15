@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using passion_project.Areas.Identity;
 using passion_project.Data;
 using passion_project.ViewModels;
 using System;
@@ -32,7 +33,7 @@ namespace passion_project.Controllers
             try
             {
                 var userId = HttpContext.User.Claims.ElementAt(0).Value;
-                var user = _db.Users.Where(u => u.Email == userId).FirstOrDefault();
+                var user = _db.Users.Cast<ApplicationUser>().Where(user => user.Email == userId).FirstOrDefault();
                 if (user == null)
                 {
                     return NotFound();
@@ -41,7 +42,8 @@ namespace passion_project.Controllers
                 {
                     Id = user.Id,
                     UserName = user.UserName,
-                    Email = user.Email
+                    Email = user.Email,
+                    BooksListened = user.BooksListened
                 };
                 return Ok(userVm);
             }

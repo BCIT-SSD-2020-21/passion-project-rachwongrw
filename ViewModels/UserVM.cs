@@ -1,4 +1,5 @@
-﻿using System;
+﻿using passion_project.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,5 +11,7 @@ namespace passion_project.ViewModels
         public string Id { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
+        public virtual ICollection<Book> BooksListened { get; set; }
+
     }
 }
