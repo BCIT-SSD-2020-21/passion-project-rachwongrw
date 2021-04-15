@@ -10,12 +10,12 @@ export default function Audiobook({ cardClicked, book }) {
     <Box className={classes.root}>
       <Card variant="outlined" className={classes.card}>
         <Typography className={classes.bookTitle} variant="h6">{title}</Typography>
-        {/* { !!book.url_Image &&
+        { !!book.url_Image &&
           <CardMedia
             className={classes.cover}
             image={book.url_Image}
             title={title}
-          />} */}
+          />}
           {/* --- book img url not included in get books api yet --- */}
         <Button className={classes.button} onClick={() => cardClicked({ id })}>
           View
