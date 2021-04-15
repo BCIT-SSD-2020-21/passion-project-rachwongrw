@@ -10,7 +10,7 @@ export default function HomePage() {
   const history = useHistory();
   const classes = useStyles();
   const [offset, setOffset] = useState(0);
-  const limit = 20;
+  const limit = 10;
   const totalPages = 15987;
 
   const cardClicked = async (data) => {

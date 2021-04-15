@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  IconButton,
   makeStyles,
   Tabs,
   Tab,
@@ -11,7 +10,6 @@ import {
   Button,
   Typography,
 } from '@material-ui/core';
-import { CloseRounded } from '@material-ui/icons';
 import React, { useState } from 'react';
 
 export default function Login({ closeClicked, submitted, error, setError }) {

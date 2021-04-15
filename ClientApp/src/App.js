@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import HomePage from '../src/layouts/HomePage';
 import DetailPage from '../src/layouts/DetailPage';
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,6 +22,10 @@ export default function App() {
       setUser(user);
     })();
   }, [token]);
+
+  const PrivateRoute = ({ path, children }) => (
+    <Route path={path}>{ user ? children : <Redirect to='/login' /> }</Route>
+  );
 
   return (
     <div>
@@ -46,9 +50,9 @@ export default function App() {
             <Route path="/books/:bookId">
               <DetailPage />
             </Route>
-            <Route path="/profile">
+            <PrivateRoute path="/profile">
               <ProfilePage />
-            </Route>
+            </PrivateRoute>
             
           </Switch>
         </main>

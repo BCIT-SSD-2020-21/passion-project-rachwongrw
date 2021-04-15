@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
 import Profile from '../../components/Profile';
 
 const ProfilePage = () => {
-  const history = useHistory();
   const classes = useStyles();
 
   return (
