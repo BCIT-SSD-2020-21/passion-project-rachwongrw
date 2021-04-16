@@ -87,7 +87,13 @@ export async function addToBookList(id) {
 
 export async function updateUser(data) {
   try {
-    const response = await axios.put(`${baseUrl}/user/update`, data);
+    console.log("going to update user", data)
+    const response = await axios.put(`${baseUrl}/api/user/updateImg`, `"${data}"`, {
+      headers:{ 
+        "Content-Type": 'application/json',
+        "Authorization": `Bearer ${token}` 
+      }
+    });
     return response.data;
   } catch (error) {
     console.log(error)

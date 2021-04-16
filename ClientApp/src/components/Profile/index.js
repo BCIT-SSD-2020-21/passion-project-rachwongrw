@@ -44,8 +44,9 @@ export default function Profile({user}) {
   const submitPhoto = async (e) => {
     e.preventDefault();
     // update user here.
-    const response = await updateUser(currentUser);
-    console.log("updated user response", response?.data)
+    console.log("going to updateUser", currentUser.profileImg )
+    const response = await updateUser(currentUser.profileImg);
+    console.log("updated user response", response)
     setOpen(false);
   }
 
@@ -76,7 +77,7 @@ export default function Profile({user}) {
   
   return (
     <div className={classes.root}>
-      <Avatar src={currentUser.profileImg} className={classes.avatar} onClick={handleOpen}/>
+      <Avatar src={currentUser?.profileImg} className={classes.avatar} onClick={handleOpen}/>
       <br/>
       <Typography variant="h6" style={{marginBottom: "1em"}}>
         {currentUser?.fName} {currentUser?.lName}

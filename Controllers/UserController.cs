@@ -53,7 +53,8 @@ namespace passion_project.Controllers
                     Email = user.Email,
                     BooksListened = user.BooksListened,
                     fName = user.fName,
-                    lName = user.lName
+                    lName = user.lName,
+                    profileImg = user.profileImg
                 };
                 return Ok(userVm);
             }
@@ -92,6 +93,35 @@ namespace passion_project.Controllers
                 {
                     user.BooksListened.Add(book);
                 }
+                _db.SaveChanges();
+
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPut]
+        [Route("updateImg")]
+        public IActionResult UpdateImg([FromBody] string profileImg)
+        {
+            try
+            {
+                var userId = HttpContext.User.Claims.ElementAt(0).Value;
+                var user = _db.Users
+                    .Include(user => user.BooksListened)
+                    .SingleOrDefault(u => u.Email == userId);
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                user.profileImg = profileImg;
+
                 _db.SaveChanges();
 
                 return Ok(user);
