@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router';
 import NavBar from '../../components/NavBar';
+import { UserContext } from '../../context/UserContext';
 
-export default function HeaderNavigation({ user, setToken, setSearch }) {
+export default function HeaderNavigation({ setToken }) {
   const history = useHistory();
+  const { setUser } = useContext(UserContext);
 
   const signOut = () => {
     setToken('');
+    setUser(null);
     history.push('/login');
   };
 
   const handleSubmit = (e) => {
-    // setSearch(e.searchValue);
     history.push(`/search/${e.searchValue}`);
   }
 
@@ -19,7 +21,6 @@ export default function HeaderNavigation({ user, setToken, setSearch }) {
     <div>
       <NavBar
         onSignOutClicked={signOut} 
-        user={user}
         onSearch={handleSubmit}
       />
     </div>
