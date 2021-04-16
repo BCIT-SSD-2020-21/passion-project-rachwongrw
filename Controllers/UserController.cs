@@ -100,43 +100,43 @@ namespace passion_project.Controllers
             }
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost]
-        [Route("name/{Id}")]
-        public async Task<IActionResult> AddfName(string firstName)
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[HttpPost]
+        //[Route("name/{Id}")]
+        //public async Task<IActionResult> AddfName(string firstName)
 
-        {
-            try
-            {
-                var userId = HttpContext.User.Claims.ElementAt(0).Value;
-                var user = _db.Users
-                    .Include(user => user.BooksListened)
-                    .SingleOrDefault(u => u.Email == userId);
+        //{
+        //    try
+        //    {
+        //        var userId = HttpContext.User.Claims.ElementAt(0).Value;
+        //        var user = _db.Users
+        //            .Include(user => user.BooksListened)
+        //            .SingleOrDefault(u => u.Email == userId);
 
-                //var book = await LibrivoxAPI.GetBook(Id);
-                //if (user == null || book == null)
-                //{
-                //    return NotFound();
-                //}
+        //        //var book = await LibrivoxAPI.GetBook(Id);
+        //        //if (user == null || book == null)
+        //        //{
+        //        //    return NotFound();
+        //        //}
 
-                //var bookExists = _db.Books.SingleOrDefault(b => b.Id == Id);
-                //if (bookExists == null)
-                //{
-                //    _db.Books.Add(book);
-                //}
+        //        //var bookExists = _db.Books.SingleOrDefault(b => b.Id == Id);
+        //        //if (bookExists == null)
+        //        //{
+        //        //    _db.Books.Add(book);
+        //        //}
 
-                if (user.fName.SingleOrDefault(b => b.fName == firstName) == null)
-                {
-                    user.Add(book);
-                }
-                _db.SaveChanges();
+        //        if (user.fName.SingleOrDefault(b => b.fName == firstName) == null)
+        //        {
+        //            user.Add(book);
+        //        }
+        //        _db.SaveChanges();
 
-                return Ok(user);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
-        }
+        //        return Ok(user);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return BadRequest(e);
+        //    }
+        //}
     }
 }

@@ -12,7 +12,7 @@ export default function Profile({user}) {
     (async () => {
       const response = await getUser();
       console.log("get user response", response?.data)
-      setUser(response.data)
+      setUser(response?.data)
     })();
   }, []);
 
