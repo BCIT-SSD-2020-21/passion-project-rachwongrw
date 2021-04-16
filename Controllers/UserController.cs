@@ -37,6 +37,7 @@ namespace passion_project.Controllers
                 var userId = HttpContext.User.Claims.ElementAt(0).Value;
                 var user = _db.Users.Cast<ApplicationUser>()
                     .Include(user => user.BooksListened)
+                    .ThenInclude(book => book.Authors)
                     .Where(user => user.Email == userId)
                     .FirstOrDefault();
 
