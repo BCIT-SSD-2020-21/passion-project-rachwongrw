@@ -10,5 +10,17 @@ namespace passion_project.Areas.Identity
     public class ApplicationUser: IdentityUser
     {
         public virtual ICollection<Book> BooksListened { get; set; }
+
+        public string fName { get; set; }
+        public string lName { get; set; }
+        public string profileImg { get; set; }
+
+        public ApplicationUser(string firstName, string lastName, string ProfileImg)
+        {
+            fName = firstName;
+            lName = lastName;
+            profileImg = ProfileImg;
+        }
     }
+
 }
