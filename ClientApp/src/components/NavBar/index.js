@@ -10,16 +10,18 @@ import {
   MenuItem,
   Menu,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
 import { AccountCircle } from '@material-ui/icons';
+import { UserContext } from '../../context/UserContext';
 
-export default function NavBar({ user, onSignOutClicked, onSearch }) {
+export default function NavBar({ onSignOutClicked, onSearch }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchValue, setSearchValue] = useState('')
   const open = Boolean(anchorEl);
+  const { user } = useContext(UserContext)
 
   const handleMenu = (e) => {
     setAnchorEl(e.currentTarget);

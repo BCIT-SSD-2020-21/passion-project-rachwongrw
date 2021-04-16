@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import NavBar from '../../components/NavBar';
 
-export default function HeaderNavigation({ user, setToken, setSearch }) {
+export default function HeaderNavigation({ setToken, setSearch }) {
   const history = useHistory();
 
   const signOut = () => {
@@ -19,7 +19,6 @@ export default function HeaderNavigation({ user, setToken, setSearch }) {
     <div>
       <NavBar
         onSignOutClicked={signOut} 
-        user={user}
         onSearch={handleSubmit}
       />
     </div>

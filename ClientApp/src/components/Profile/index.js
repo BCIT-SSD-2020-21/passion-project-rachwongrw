@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Avatar, Button, TextField, Typography, makeStyles } from '@material-ui/core';
 import UserModal from '../Modal';
 import { getUser } from '../../network';
+import { UserContext } from '../../context/UserContext';
 
-export default function Profile({user}) {
+export default function Profile() {
   const [open, setOpen] = useState(false);
-  const [currentUser, setUser] = useState(user);
+  const { user, setUser } = useContext(UserContext);
+  // const [currentUser, setCurrentUser] = useState(user);
+
   const classes = useStyles()
 
   useEffect(() => {
@@ -79,14 +82,14 @@ export default function Profile({user}) {
         </Typography>
         <hr/>
         <p><strong>Email</strong>: <i>{user.sub}</i></p>
-        <p><strong>Books Listened To</strong>: <i>{currentUser?.booksListened?.length}</i></p>
+        <p><strong>Books Listened To</strong>: <i>{user?.booksListened?.length}</i></p>
         <br/>
         <Typography variant="body1">
           <strong>Your Books</strong>
         </Typography>
         <hr/>
         {
-          currentUser?.booksListened?.map(book =>
+          user?.booksListened?.map(book =>
               <p key={book.id}><strong>{ fullName(book) }</strong>: <i>{book.title}</i></p>
           )
         }
