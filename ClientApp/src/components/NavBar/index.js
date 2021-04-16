@@ -103,7 +103,7 @@ export default function NavBar({ onSignOutClicked, onSearch }) {
                 </Menu>
               </>
             ) : (
-              <Link className={classes.link} to="/login" color="inherit">
+              <Link  to="/login" color="inherit">
                 Login
               </Link>
             )}

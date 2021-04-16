@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Avatar, Button, TextField, Typography, makeStyles } from '@material-ui/core';
 import UserModal from '../Modal';
-import { getUser } from '../../network';
 import { UserContext } from '../../context/UserContext';
+import { getUser, updateUser } from '../../network';
+import { useHistory } from 'react-router-dom';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 export default function Profile() {
   const [open, setOpen] = useState(false);
@@ -10,12 +12,13 @@ export default function Profile() {
   // const [currentUser, setUser] = useState(user);
 
   const classes = useStyles()
+  const history = useHistory();
 
   useEffect(() => {
     (async () => {
       const response = await getUser();
       console.log("get user response", response?.data)
-      setUser(response.data)
+      setUser(response?.data)
     })();
   }, []);
 
@@ -29,32 +32,36 @@ export default function Profile() {
 
   const handleChange = (field, val) => {
     console.log("handle change", field, val)
+    var updatedUser = Object.assign({}, currentUser)
+    console.log("updatedUser", updatedUser)
     switch (field) {
-      case 'fName':
-        
-        break;
-      case 'lName':
-      
-        break;
-      case 'img':
-
+      case 'profileImg':
+        updatedUser.profileImg = val
         break;
       default:
         break;
     }
-    
+    setUser(updatedUser)
+  }
+
+  const submitPhoto = async (e) => {
+    e.preventDefault();
+    // update user here.
+    const response = await updateUser(currentUser);
+    console.log("updated user response", response?.data)
+    setOpen(false);
   }
 
   const body = (
-    <form style={{textAlign: "center"}}>
+    <form style={{textAlign: "center"}} onSubmit={submitPhoto}>
       <Typography variant="h5" style={{paddingBottom: "1em"}}>Update Profile Image</Typography>
       <TextField
         label='Profile Image'
         placeholder="Place image URL here"
-        onChange={(e) => handleChange(e.target.value)}
+        onChange={(e) => handleChange('profileImg', e.target.value)}
         className='text-field'
         type="url"
-        defaultValue={user?.profileImage}
+        defaultValue={currentUser?.profileImg}
       />
       <Button className={classes.submit} type='submit'>
         Save
@@ -62,19 +69,20 @@ export default function Profile() {
     </form>
   )
   
-    const fullName = (book) => {
-        if (book.authors && book.authors.length > 0) {
-            const author = book.authors[0]
-            return `${author.firstName} ${author.lastName}`
-        }
-        return 'N/A'
+  const fullName = (book) => {
+    if (book.authors && book.authors.length > 0) {
+      const author = book.authors[0]
+      return `${author.firstName} ${author.lastName}`
     }
+    return 'N/A'
+  }
+  
   return (
     <div className={classes.root}>
-      <Avatar src={user.img} className={classes.avatar} onClick={handleOpen}/>
+      <Avatar src={currentUser.profileImg} className={classes.avatar} onClick={handleOpen}/>
       <br/>
       <Typography variant="h6" style={{marginBottom: "1em"}}>
-        Sarah Young
+        {currentUser?.fName} {currentUser?.lName}
       </Typography>
       <div className={classes.details}>
         <Typography variant="body1">
@@ -90,9 +98,11 @@ export default function Profile() {
         <hr/>
         {
           user?.booksListened?.map(book =>
-              <p key={book.id}><strong>{ fullName(book) }</strong>: <i>{book.title}</i></p>
-          )
-        }
+            <a key={book.id} onClick={() => history.push(`/books/${book.id}`)} style={{display: "flex"}}>
+              <PlayArrowIcon/>&nbsp;
+              <strong>{fullName(book)}</strong>&nbsp;:&nbsp;<i>{book.title}</i>
+            </a>
+        )}
       </div>
       <UserModal body={body} handleClose={handleClose} open={open}/>
     </div>

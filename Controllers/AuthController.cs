@@ -36,7 +36,7 @@ namespace passion_project.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = registerVM.Email, Email = registerVM.Email, EmailConfirmed = true };
+                var user = new ApplicationUser { UserName = registerVM.Email, Email = registerVM.Email, EmailConfirmed = true, fName = registerVM.fName, lName = registerVM.lName };
                 var result = await _userManager.CreateAsync(user, registerVM.Password);
                 if (result.Succeeded)
                 {

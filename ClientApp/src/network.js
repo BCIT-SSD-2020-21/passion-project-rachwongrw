@@ -84,3 +84,12 @@ export async function addToBookList(id) {
     console.log(error)
   }
 }
+
+export async function updateUser(data) {
+  try {
+    const response = await axios.put(`${baseUrl}/user/update`, data);
+    return response.data;
+  } catch (error) {
+    console.log(error)
+  }
+}
