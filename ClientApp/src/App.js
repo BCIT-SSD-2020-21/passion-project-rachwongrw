@@ -24,8 +24,8 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      const user = token ? jwtDecode(token) : null;
-      setUser(user);
+      const currentUser = token ? jwtDecode(token) : null;
+      setUser(currentUser);
     })();
   }, [token]);
 
@@ -40,17 +40,16 @@ export default function App() {
           value={{ 
             user, 
             setUser,
-            setToken
            }}
         >
-          <HeaderNavigation />
+          <HeaderNavigation setToken={setToken} />
           <main className={classes.root}>
             <Switch>
               <Route exact path="/">
                 <HomePage />
               </Route>
               <Route path="/login">
-                <LoginPage />
+                <LoginPage setToken={setToken} />
               </Route>
               {/* <Route exact path="/profile" component={ProfilePage} /> */}
 

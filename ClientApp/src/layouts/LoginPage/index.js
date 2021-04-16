@@ -1,15 +1,16 @@
 import { makeStyles } from '@material-ui/core';
+import jwtDecode from 'jwt-decode';
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router';
 import Login from '../../components/Login';
 import { UserContext } from '../../context/UserContext';
 import { loginUser, registerUser } from '../../network';
 
-export default function LoginPage() {
+export default function LoginPage({ setToken }) {
   const history = useHistory();
   const classes = useStyles();
   const [error, setError] = useState(false);
-  const { setToken } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const login = async (details) => {
     let result;
@@ -24,6 +25,7 @@ export default function LoginPage() {
 
     if (result) {
       setToken(result);
+      setUser(jwtDecode(result));
       history.push('/');
     } else {
       setError(true);

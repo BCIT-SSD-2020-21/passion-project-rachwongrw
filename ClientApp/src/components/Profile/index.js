@@ -9,7 +9,6 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 export default function Profile() {
   const [open, setOpen] = useState(false);
   const { user, setUser } = useContext(UserContext);
-  // const [currentUser, setUser] = useState(user);
 
   const classes = useStyles()
   const history = useHistory();
@@ -32,7 +31,7 @@ export default function Profile() {
 
   const handleChange = (field, val) => {
     console.log("handle change", field, val)
-    var updatedUser = Object.assign({}, currentUser)
+    var updatedUser = Object.assign({}, user)
     console.log("updatedUser", updatedUser)
     switch (field) {
       case 'profileImg':
@@ -47,7 +46,7 @@ export default function Profile() {
   const submitPhoto = async (e) => {
     e.preventDefault();
     // update user here.
-    const response = await updateUser(currentUser);
+    const response = await updateUser(user);
     console.log("updated user response", response?.data)
     setOpen(false);
   }
@@ -61,7 +60,7 @@ export default function Profile() {
         onChange={(e) => handleChange('profileImg', e.target.value)}
         className='text-field'
         type="url"
-        defaultValue={currentUser?.profileImg}
+        defaultValue={user?.profileImg}
       />
       <Button className={classes.submit} type='submit'>
         Save
@@ -79,10 +78,10 @@ export default function Profile() {
   
   return (
     <div className={classes.root}>
-      <Avatar src={currentUser.profileImg} className={classes.avatar} onClick={handleOpen}/>
+      <Avatar src={user.profileImg} className={classes.avatar} onClick={handleOpen}/>
       <br/>
       <Typography variant="h6" style={{marginBottom: "1em"}}>
-        {currentUser?.fName} {currentUser?.lName}
+        {user?.fName} {user?.lName}
       </Typography>
       <div className={classes.details}>
         <Typography variant="body1">

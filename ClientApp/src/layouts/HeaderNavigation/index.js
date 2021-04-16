@@ -3,12 +3,13 @@ import { useHistory } from 'react-router';
 import NavBar from '../../components/NavBar';
 import { UserContext } from '../../context/UserContext';
 
-export default function HeaderNavigation() {
+export default function HeaderNavigation({ setToken }) {
   const history = useHistory();
-  const { setToken } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const signOut = () => {
     setToken('');
+    setUser(null);
     history.push('/login');
   };
 
