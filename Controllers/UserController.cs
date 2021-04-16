@@ -51,7 +51,9 @@ namespace passion_project.Controllers
                     Id = user.Id,
                     UserName = user.UserName,
                     Email = user.Email,
-                    BooksListened = user.BooksListened
+                    BooksListened = user.BooksListened,
+                    fName = user.fName,
+                    lName = user.lName
                 };
                 return Ok(userVm);
             }

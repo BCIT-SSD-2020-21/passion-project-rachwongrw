@@ -13,6 +13,12 @@ namespace passion_project.ViewModels
         public string Email { get; set; }
 
         [Required]
+        public string fName { get; set; }
+
+        [Required]
+        public string lName { get; set; }
+
+        [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
