@@ -75,6 +75,7 @@ namespace passion_project.Controllers
                 var userId = HttpContext.User.Claims.ElementAt(0).Value;
                 var user = _db.Users
                     .Include(user => user.BooksListened)
+                    .ThenInclude(book => book.Authors)
                     .SingleOrDefault(u => u.Email == userId);
 
                 var book = await LibrivoxAPI.GetBook(Id);
