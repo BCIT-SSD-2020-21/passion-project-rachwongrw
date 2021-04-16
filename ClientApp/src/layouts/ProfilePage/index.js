@@ -2,12 +2,12 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import Profile from '../../components/Profile';
 
-const ProfilePage = () => {
+const ProfilePage = ({user}) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-        <Profile/>
+        <Profile user={user}/>
     </div>
   );
 }

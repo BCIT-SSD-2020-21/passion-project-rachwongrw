@@ -9,9 +9,9 @@ export default function HomePage() {
   const [books, setBooks] = useState([]);
   const history = useHistory();
   const classes = useStyles();
-  const [offset, setOffset] = useState(0);
+  const [page, setPage] = useState(0);
   const limit = 12;
-  const totalPages = 15987;
+  const totalPages = 15990;
 
   const cardClicked = async (data) => {
     history.push(`/books/${data.id}`);
@@ -19,13 +19,13 @@ export default function HomePage() {
 
   useEffect(() => {
     (async () => {
-      const response = await getAllBooks(limit, offset);
+      const response = await getAllBooks(limit, page * limit);
       setBooks(response.data);
     })();
-  }, [offset]);
+  }, [page]);
 
   const handleChange = (e, value) => {
-    setOffset(value - 1);
+    setPage(value - 1);
   };
 
   return (
@@ -42,7 +42,7 @@ export default function HomePage() {
           <div className={classes.paginationContainer}>
             <Pagination
               onChange={handleChange}
-              page={offset + 1}
+              page={page + 1}
               count={totalPages}
             />
           </div>

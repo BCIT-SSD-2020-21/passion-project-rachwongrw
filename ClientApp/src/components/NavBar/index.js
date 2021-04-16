@@ -39,7 +39,7 @@ export default function NavBar({ user, onSignOutClicked, onSearch }) {
     onSearch({ searchValue });
     setSearchValue('');
   }
-  console.log("header nav user", user)
+  
   return (
     <div className={classes.root}>
       <AppBar className={classes.nav} position="static">
@@ -151,7 +151,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginRight: theme.spacing(2),
-    marginLeft: 0,
+    marginLeft: '2em',
     width: '100%',
     // [theme.breakpoints.up('sm')]: {
     //   marginLeft: theme.spacing(3),

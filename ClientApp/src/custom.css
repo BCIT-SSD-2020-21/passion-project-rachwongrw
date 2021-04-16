@@ -16,3 +16,17 @@ code {
 button.MuiButtonBase-root:focus, .MuiIconButton-root:focus, .MuiButton-label:focus {
   outline: none;
 }
+
+.close-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: -10px;
+}
+.close-wrapper svg:hover {
+  cursor: pointer;
+}
+
+.text-field {
+  width: 100%;
+  margin: 0.5em 0 !important;
+}
