@@ -13,13 +13,13 @@ export default function Profile() {
   const classes = useStyles()
   const history = useHistory();
 
-  useEffect(() => {
-    (async () => {
-      const response = await getUser();
-      console.log("get user response", response?.data)
-      setUser(response?.data)
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const response = await getUser();
+  //     console.log("get user response", response?.data)
+  //     setUser(response?.data)
+  //   })();
+  // }, [user]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -46,8 +46,7 @@ export default function Profile() {
   const submitPhoto = async (e) => {
     e.preventDefault();
     // update user here.
-    console.log("going to updateUser", currentUser.profileImg )
-    const response = await updateUser(currentUser.profileImg);
+    const response = await updateUser(user.profileImg);
     console.log("updated user response", response)
     setOpen(false);
   }
@@ -79,11 +78,7 @@ export default function Profile() {
   
   return (
     <div className={classes.root}>
-<<<<<<< HEAD
-      <Avatar src={currentUser?.profileImg} className={classes.avatar} onClick={handleOpen}/>
-=======
       <Avatar src={user.profileImg} className={classes.avatar} onClick={handleOpen}/>
->>>>>>> main
       <br/>
       <Typography variant="h6" style={{marginBottom: "1em"}}>
         {user?.fName} {user?.lName}
