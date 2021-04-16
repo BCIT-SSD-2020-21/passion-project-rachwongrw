@@ -26,32 +26,34 @@ export default function Profile({user}) {
 
   const handleChange = (field, val) => {
     console.log("handle change", field, val)
+    var updatedUser = Object.assign({}, currentUser)
+    console.log("updatedUser", updatedUser)
     switch (field) {
-      case 'fName':
-        
-        break;
-      case 'lName':
-      
-        break;
-      case 'img':
-
+      case 'profileImg':
+        updatedUser.profileImg = val
         break;
       default:
         break;
     }
-    
+    setUser(updatedUser)
+  }
+
+  const submitPhoto = (e) => {
+    e.preventDefault();
+    // update user here.
+    setOpen(false);
   }
 
   const body = (
-    <form style={{textAlign: "center"}}>
+    <form style={{textAlign: "center"}} onSubmit={submitPhoto}>
       <Typography variant="h5" style={{paddingBottom: "1em"}}>Update Profile Image</Typography>
       <TextField
         label='Profile Image'
         placeholder="Place image URL here"
-        onChange={(e) => handleChange(e.target.value)}
+        onChange={(e) => handleChange('profileImg', e.target.value)}
         className='text-field'
         type="url"
-        defaultValue={user?.profileImage}
+        defaultValue={currentUser?.profileImg}
       />
       <Button className={classes.submit} type='submit'>
         Save
@@ -59,19 +61,20 @@ export default function Profile({user}) {
     </form>
   )
   
-    const fullName = (book) => {
-        if (book.authors && book.authors.length > 0) {
-            const author = book.authors[0]
-            return `${author.firstName} ${author.lastName}`
-        }
-        return 'N/A'
+  const fullName = (book) => {
+    if (book.authors && book.authors.length > 0) {
+      const author = book.authors[0]
+      return `${author.firstName} ${author.lastName}`
     }
+    return 'N/A'
+  }
+  
   return (
     <div className={classes.root}>
-      <Avatar src={user.img} className={classes.avatar} onClick={handleOpen}/>
+      <Avatar src={currentUser.profileImg} className={classes.avatar} onClick={handleOpen}/>
       <br/>
       <Typography variant="h6" style={{marginBottom: "1em"}}>
-        Sarah Young
+        {currentUser?.fName} {currentUser?.lName}
       </Typography>
       <div className={classes.details}>
         <Typography variant="body1">

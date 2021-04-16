@@ -12,11 +12,13 @@ import {
 } from '@material-ui/core';
 import React, { useState } from 'react';
 
-export default function Login({ closeClicked, submitted, error, setError }) {
+export default function Login({ submitted, error, setError }) {
   const classes = useStyles();
   const [tabValue, setTabValue] = useState(0);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [fName, setfName] = useState('');
+  const [lName, setlName] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleChange = (e, newTabValue) => {
@@ -26,16 +28,22 @@ export default function Login({ closeClicked, submitted, error, setError }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    try { 
 
-    if (tabValue === 0) {
-      submitted({ type: 'login', email, password });
-    } else {
-      submitted({ type: 'signup', email, password, confirmPassword });
+      if (tabValue === 0) {
+        submitted({ type: 'login', email, password });
+      } else {
+        submitted({ type: 'signup', email, password, confirmPassword, fName, lName });
+      }
+
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+      setfName('');
+      setlName('');
+    } catch (err) {
+      console.log(err)
     }
-
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
   };
 
   return (
@@ -68,6 +76,25 @@ export default function Login({ closeClicked, submitted, error, setError }) {
           noValidate
           autoComplete="off"
         >
+          {
+            tabValue === 1 && 
+            <>
+              <TextField
+                value={fName}
+                onChange={(e) => setfName(e.target.value)}
+                className={classes.formInput}
+                label="First Name"
+                variant="outlined"
+              />
+              <TextField
+                value={lName}
+                onChange={(e) => setlName(e.target.value)}
+                className={classes.formInput}
+                label="Last Name"
+                variant="outlined"
+              />
+            </>
+          }
           <TextField
             type="email"
             value={email}
