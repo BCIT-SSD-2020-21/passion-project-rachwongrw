@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Avatar, Button, TextField, Typography, makeStyles } from '@material-ui/core';
 import UserModal from '../Modal';
-import { getUser } from '../../network';
+import { getUser, updateUser } from '../../network';
+import { useHistory } from 'react-router-dom';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 export default function Profile({user}) {
   const [open, setOpen] = useState(false);
   const [currentUser, setUser] = useState(user);
   const classes = useStyles()
+  const history = useHistory();
 
   useEffect(() => {
     (async () => {
@@ -38,9 +41,11 @@ export default function Profile({user}) {
     setUser(updatedUser)
   }
 
-  const submitPhoto = (e) => {
+  const submitPhoto = async (e) => {
     e.preventDefault();
     // update user here.
+    const response = await updateUser(currentUser);
+    console.log("updated user response", response?.data)
     setOpen(false);
   }
 
@@ -90,9 +95,11 @@ export default function Profile({user}) {
         <hr/>
         {
           currentUser?.booksListened?.map(book =>
-              <p key={book.id}><strong>{ fullName(book) }</strong>: <i>{book.title}</i></p>
-          )
-        }
+            <a key={book.id} onClick={() => history.push(`/books/${book.id}`)} style={{display: "flex"}}>
+              <PlayArrowIcon/>&nbsp;
+              <strong>{fullName(book)}</strong>&nbsp;:&nbsp;<i>{book.title}</i>
+            </a>
+        )}
       </div>
       <UserModal body={body} handleClose={handleClose} open={open}/>
     </div>
