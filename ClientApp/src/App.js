@@ -36,15 +36,21 @@ export default function App() {
   return (
     <div>
       <Router>
-        <UserContext.Provider value={{ user, setUser }}>
-          <HeaderNavigation setToken={setToken} />
+        <UserContext.Provider 
+          value={{ 
+            user, 
+            setUser,
+            setToken
+           }}
+        >
+          <HeaderNavigation />
           <main className={classes.root}>
             <Switch>
               <Route exact path="/">
                 <HomePage />
               </Route>
               <Route path="/login">
-                <LoginPage setToken={setToken} />
+                <LoginPage />
               </Route>
               {/* <Route exact path="/profile" component={ProfilePage} /> */}
 

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router';
 import NavBar from '../../components/NavBar';
+import { UserContext } from '../../context/UserContext';
 
-export default function HeaderNavigation({ setToken, setSearch }) {
+export default function HeaderNavigation() {
   const history = useHistory();
+  const { setToken } = useContext(UserContext);
 
   const signOut = () => {
     setToken('');
@@ -11,7 +13,6 @@ export default function HeaderNavigation({ setToken, setSearch }) {
   };
 
   const handleSubmit = (e) => {
-    // setSearch(e.searchValue);
     history.push(`/search/${e.searchValue}`);
   }
 

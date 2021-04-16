@@ -7,7 +7,7 @@ import { UserContext } from '../../context/UserContext';
 export default function Profile() {
   const [open, setOpen] = useState(false);
   const { user, setUser } = useContext(UserContext);
-  // const [currentUser, setCurrentUser] = useState(user);
+  // const [currentUser, setUser] = useState(user);
 
   const classes = useStyles()
 
