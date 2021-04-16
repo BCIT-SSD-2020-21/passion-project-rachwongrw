@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql2": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/passion-projectdbserver/databases/passion-project_db",
+      "type": "mssql.azure",
+      "connectionId": "AuthConnection",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}
