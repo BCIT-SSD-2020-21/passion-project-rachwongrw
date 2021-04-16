@@ -13,13 +13,13 @@ export default function Profile() {
   const classes = useStyles()
   const history = useHistory();
 
-  useEffect(() => {
-    (async () => {
-      const response = await getUser();
-      console.log("get user response", response?.data)
-      setUser(response?.data)
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const response = await getUser();
+  //     console.log("get user response", response?.data)
+  //     setUser(response?.data)
+  //   })();
+  // }, [user]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -46,8 +46,8 @@ export default function Profile() {
   const submitPhoto = async (e) => {
     e.preventDefault();
     // update user here.
-    const response = await updateUser(user);
-    console.log("updated user response", response?.data)
+    const response = await updateUser(user.profileImg);
+    console.log("updated user response", response)
     setOpen(false);
   }
 

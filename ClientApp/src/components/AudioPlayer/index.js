@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, CardMedia, IconButton, Typography } from '@material-ui/core';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
@@ -7,6 +7,7 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 import PauseIcon from '@material-ui/icons/Pause';
 import { getAudioFiles, addToBookList } from '../../network';
 import { useParams } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 
 export default function AudioPlayer({book}) {
   const [audioPaused, setAudioPause] = useState(true)
@@ -14,7 +15,8 @@ export default function AudioPlayer({book}) {
   const [i, setIndex] = useState(0)
   const classes = useStyles();
   const { bookId } = useParams();
-  
+  const { setUser } = useContext(UserContext);
+
   useEffect(() => {
     (async () => {
       const response = await getAudioFiles(bookId);
@@ -29,6 +31,7 @@ export default function AudioPlayer({book}) {
     
     const response = await addToBookList(bookId);
     console.log("addToBookList", response.data)
+    setUser(response.data)
   }
 
   const changeTrack = (dir) => {

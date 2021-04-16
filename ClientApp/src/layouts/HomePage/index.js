@@ -11,7 +11,7 @@ export default function HomePage() {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const limit = 12;
-  const totalPages = 15990;
+  const totalPages = 1240;
 
   const cardClicked = async (data) => {
     history.push(`/books/${data.id}`);
