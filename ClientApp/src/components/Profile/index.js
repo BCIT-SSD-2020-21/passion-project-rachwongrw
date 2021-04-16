@@ -59,7 +59,13 @@ export default function Profile({user}) {
     </form>
   )
   
-  
+    const fullName = (book) => {
+        if (book.authors && book.authors.length > 0) {
+            const author = book.authors[0]
+            return `${author.firstName} ${author.lastName}`
+        }
+        return 'N/A'
+    }
   return (
     <div className={classes.root}>
       <Avatar src={user.img} className={classes.avatar} onClick={handleOpen}/>
@@ -81,7 +87,7 @@ export default function Profile({user}) {
         <hr/>
         {
           currentUser?.booksListened?.map(book =>
-            <p key={book.id}><strong>Author Name Here</strong>: <i>{book.title}</i></p>
+              <p key={book.id}><strong>{ fullName(book) }</strong>: <i>{book.title}</i></p>
           )
         }
       </div>
